@@ -2,22 +2,22 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-//REGISTER
+// REGISTER
 exports.register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
-    //Kolla om användare redan finns
+    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: "E-post är redan registrerad." });
+      return res.status(400).json({ message: "Email is already registered." });
     }
 
-    //Hasha lösenord
+    // Hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    //Skapa ny användare
+    // Create new user
     const newUser = new User({
       username,
       email,
@@ -26,36 +26,36 @@ exports.register = async (req, res) => {
 
     await newUser.save();
 
-    res.status(201).json({ message: "Användare registrerad" });
+    res.status(201).json({ message: "User registered successfully." });
   } catch (err) {
-    console.error("Fel vid register", err);
-    res.status(500).json({ message: "Serverfel vid registrering" });
+    console.error("Error during registration", err);
+    res.status(500).json({ message: "Server error during registration." });
   }
 };
 
-//LOGIN
+// LOGIN
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    //Hitta användaren
+    // Find user
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: "Fel e-post eller lösenord." });
+      return res.status(400).json({ message: "Invalid email or password." });
     }
 
-    //Kolla lösenordet
+    // Check password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: "Fel e-post eller lösenord." });
+      return res.status(400).json({ message: "Invalid email or password." });
     }
 
-    //Skapa JWT-token
+    // Create JWT token
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 
-    //Retunera användardata + token
+    // Return user data + token
     res.status(200).json({
       token,
       user: {
@@ -65,7 +65,47 @@ exports.login = async (req, res) => {
       },
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Serverfel vid inloggning." });
+    console.error("Error during login", err);
+    res.status(500).json({ message: "Server error during login." });
+  }
+};
+
+// FORGOT PASSWORD
+exports.forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "Email address not found." });
+    }
+    res.status(200).json({
+      message: "Email verified. You can now reset your password.",
+    });
+  } catch (err) {
+    console.error("Error during forgot password", err);
+    res
+      .status(500)
+      .json({ message: "Server error during password reset request." });
+  }
+};
+
+// RESET PASSWORD
+exports.resetPassword = async (req, res) => {
+  const { email, newPassword } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    user.password = hashedPassword;
+    await user.save();
+
+    res.status(200).json({ message: "Password updated successfully." });
+  } catch (err) {
+    console.error("Error during reset password", err);
+    res.status(500).json({ message: "Server error during password reset." });
   }
 };

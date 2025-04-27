@@ -1,0 +1,110 @@
+.auth-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.auth-container h2 {
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.auth-container input {
+  width: 100%;
+  padding: 12px 14px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background-color: #f9fafb;
+  font-size: 1rem;
+  transition: border 0.2s ease;
+}
+
+.auth-container input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.auth-container button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  border: none;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background 0.3s ease;
+}
+
+.auth-container button:hover {
+  background: linear-gradient(135deg, #0056b3, #004080);
+}
+
+.error {
+  color: #dc3545;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.success {
+  color: #28a745;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* ========== Responsive Tweaks for Auth ========== */
+
+/* Tablets and small laptops */
+@media (max-width: 768px) {
+  .auth-container {
+    width: 90%;
+    padding: 1.5rem;
+    margin: 50px auto;
+  }
+
+  .auth-container input {
+    padding: 10px;
+  }
+
+  .auth-container button {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Mobile Phones */
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 1rem;
+    margin: 30px auto;
+  }
+}
+
+/* ========== Loading Spinner ========== */
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #007bff;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin: 15px auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
