@@ -22,8 +22,9 @@ const Login = () => {
       const res = await API.post("/auth/login", formData);
       console.log(res.data);
 
-      //Spara token i localStorage
+      //Spara token och username i localStorage
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("username", res.data.user.username);
 
       alert("Login successful! Redirecting...");
       navigate("/dashboard");
