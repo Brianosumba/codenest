@@ -4,6 +4,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const authRoutes = require("./routes/auth");
+const snippetRoutes = require("./routes/snippetRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -14,6 +15,7 @@ app.use(express.json());
 
 //Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/snippets", snippetRoutes);
 
 //MongoDB connection
 console.log("🔍 MONGO_URI från env:", process.env.MONGO_URL);

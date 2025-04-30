@@ -5,6 +5,7 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import ForgotPassword from "./components/ForgotPassword";
 import Dashboard from "./components/Dashboard";
+import CreateSnippet from "./components/CreateSnippet";
 
 //(Sen lägger vi till Dashboard-komponent också)
 
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/create-snippet" element={<CreateSnippet />} />
       </Routes>
     </Router>
   );

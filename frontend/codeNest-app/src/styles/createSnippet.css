@@ -1,0 +1,49 @@
+.create-snippet-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  background: #ffffffcc;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.create-snippet-container h2 {
+  text-align: center;
+  color: #007bff;
+  margin-bottom: 1.5rem;
+}
+
+.create-snippet-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-snippet-container input,
+.create-snippet-container textarea {
+  margin-bottom: 1rem;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: "Poppins", sans-serif;
+}
+
+.create-snippet-container button {
+  padding: 1rem;
+  background: linear-gradient(to right, #007bff, #0056b3);
+  color: white;
+  border: none;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.create-snippet-container button:hover {
+  background: linear-gradient(to right, #0056b3, #003f7f);
+  transform: scale(1.05);
+}
+
+.error {
+  color: red;
+  text-align: center;
+}
