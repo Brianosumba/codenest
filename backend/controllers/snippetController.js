@@ -40,3 +40,19 @@ exports.getUserSnippets = async (req, res) => {
     res.status(500).json({ message: "Server error fetching snippets" });
   }
 };
+
+//GET SNIPPET BY ID
+exports.getSnippetById = async (req, res) => {
+  try {
+    const snippet = await Snippet.findById(req.params.id);
+
+    if (!Snippet || snippet.userId.toString() !== req.user.id) {
+      return res.status(404).json({ message: "Snippet not found" });
+    }
+
+    res.status(200).json(snippet);
+  } catch (err) {
+    console.error("Error fetching snippet", err);
+    res.status(500).json({ message: "Server error fetching snippet" });
+  }
+};

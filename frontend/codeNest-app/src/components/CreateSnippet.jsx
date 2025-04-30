@@ -79,11 +79,41 @@ const CreateSnippet = () => {
 
         <textarea
           name="description"
-          placeholder="Markdown Description (Optional)"
-          rows="4"
+          placeholder="Write description in Markdown..."
+          rows="6"
           value={formData.description}
           onChange={handleChange}
-        ></textarea>
+        />
+
+        <div className="markdown-guide">
+          <h4>💡 Markdown Guide</h4>
+          <div className="guide-row">
+            <div>
+              <strong>Heading:</strong> <code># Title</code>
+            </div>
+            <div>
+              <strong>Subheading:</strong> <code>## Subtitle</code>
+            </div>
+            <div>
+              <strong>Bold:</strong> <code>**bold**</code>
+            </div>
+            <div>
+              <strong>Italic:</strong> <code>*italic*</code>
+            </div>
+            <div>
+              <strong>List:</strong> <code>- Item</code>
+            </div>
+            <div>
+              <strong>Code:</strong> <code>`code`</code>
+            </div>
+            <div>
+              <strong>Code block:</strong> <code>```js</code>
+            </div>
+            <div>
+              <strong>Link:</strong> <code>[text](url)</code>
+            </div>
+          </div>
+        </div>
 
         <input
           type="text"

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../styles/dashboard.css";
 import { useNavigate } from "react-router-dom";
 import API from "../API/api";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -54,8 +55,9 @@ const Dashboard = () => {
           <ul>
             {snippets.map((snippet) => (
               <li key={snippet._id}>
-                <strong>{snippet.title}</strong>{" "}
-                <span>({snippet.language})</span>
+                <Link to={`/snippet/${snippet._id}`}>
+                  <strong>{snippet.title}</strong> ({snippet.language})
+                </Link>{" "}
               </li>
             ))}
           </ul>

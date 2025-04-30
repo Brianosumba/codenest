@@ -6,8 +6,7 @@ import Login from "./components/Login";
 import ForgotPassword from "./components/ForgotPassword";
 import Dashboard from "./components/Dashboard";
 import CreateSnippet from "./components/CreateSnippet";
-
-//(Sen lägger vi till Dashboard-komponent också)
+import SnippetDetail from "./components/SnippetDetail";
 
 const App = () => {
   return (
@@ -20,6 +19,7 @@ const App = () => {
 
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/create-snippet" element={<CreateSnippet />} />
+        <Route path="/snippet/:id" element={<SnippetDetail />} />
       </Routes>
     </Router>
   );

@@ -47,3 +47,39 @@
   color: red;
   text-align: center;
 }
+
+.markdown-guide {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #f0f4ff;
+  border-left: 4px solid #007bff;
+  border-radius: 8px;
+}
+
+.markdown-guide h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+.guide-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: #444;
+}
+
+.guide-row div {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.guide-row code {
+  background: #eaeaea;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
