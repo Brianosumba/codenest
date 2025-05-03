@@ -35,7 +35,10 @@ const CreateSnippet = () => {
     try {
       const payload = {
         ...formData,
-        tags: formData.tags.split(",").map((tag) => tag.trim()), // Convert string to array
+        tags: formData.tags
+          .split(",")
+          .map((tag) => tag.trim().toLowerCase())
+          .filter(Boolean),
       };
 
       const token = localStorage.getItem("token");

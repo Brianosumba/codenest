@@ -60,6 +60,21 @@
   font-weight: bold;
   color: #333;
 }
+.search-filter-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.search-filter-container input,
+.search-filter-container select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  flex: 1;
+}
 
 .recent-snippets {
   margin-bottom: 2rem;

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../styles/dashboard.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import API from "../API/api";
-import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -11,6 +10,8 @@ const Dashboard = () => {
   const [snippets, setSnippets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   const handleCreateSnippet = () => {
     navigate("/create-snippet");
@@ -25,6 +26,7 @@ const Dashboard = () => {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log("Snippet fetched:", res.data);
         setSnippets(res.data);
       } catch (err) {
         console.error(err);
@@ -36,11 +38,53 @@ const Dashboard = () => {
     fetchSnippets();
   }, []);
 
+  const filteredSnippets = snippets.filter((snippet) => {
+    const query = searchQuery.toLowerCase();
+
+    const matchTitle = snippet.title?.toLowerCase().includes(query);
+    const matchLanguage = snippet.language?.toLowerCase().includes(query);
+    const matchCategory = snippet.category?.toLowerCase().includes(query);
+    const matchTags = Array.isArray(snippet.tags)
+      ? snippet.tags.some((tag) => tag.toLowerCase().includes(query))
+      : false;
+
+    const categoryMatch =
+      selectedCategory.toLowerCase() === "all" ||
+      snippet.category?.toLowerCase() === selectedCategory.toLowerCase();
+
+    return (
+      (matchTitle || matchLanguage || matchTags || matchCategory) &&
+      categoryMatch
+    );
+  });
+
+  const uniqueCategories = ["All", ...new Set(snippets.map((s) => s.category))];
+
   return (
     <div className="dashboard-container">
       <div className="welcome-card">
         <h1>Welcome to CodeNest, {username}!</h1>
         <p>Manage your code snippets and learning journey easily</p>
+      </div>
+
+      <div className="search-filter-container">
+        <input
+          type="text"
+          placeholder="Search by title, language or tag..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+
+        <select
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+        >
+          {uniqueCategories.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="recent-snippets">
@@ -49,15 +93,15 @@ const Dashboard = () => {
           <p>Loading snippets...</p>
         ) : error ? (
           <p className="error">{error}</p>
-        ) : snippets.length === 0 ? (
-          <p>No snippets found. Start by creating one!</p>
+        ) : filteredSnippets.length === 0 ? (
+          <p>No snippets matched your search.</p>
         ) : (
           <ul>
-            {snippets.map((snippet) => (
+            {filteredSnippets.map((snippet) => (
               <li key={snippet._id}>
                 <Link to={`/snippet/${snippet._id}`}>
                   <strong>{snippet.title}</strong> ({snippet.language})
-                </Link>{" "}
+                </Link>
               </li>
             ))}
           </ul>

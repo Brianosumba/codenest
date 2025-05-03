@@ -5,6 +5,10 @@ exports.createSnippet = async (req, res) => {
   const { title, code, description, language, category, tags, isFavorite } =
     req.body;
 
+  const cleanTags = Array.isArray(tags)
+    ? tags.filter((tag) => tag && tag.trim() !== "")
+    : [];
+
   try {
     const newSnippet = new Snippet({
       title,
@@ -12,7 +16,7 @@ exports.createSnippet = async (req, res) => {
       description,
       language,
       category,
-      tags,
+      tags: cleanTags,
       isFavorite,
       userId: req.user.id,
     });
