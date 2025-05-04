@@ -12,12 +12,43 @@ const CreateSnippet = () => {
     description: "",
     language: "",
     category: "",
-    tags: "",
+    tags: [],
     isFavorite: false,
   });
 
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const suggestedTags = [
+    "JavaScript",
+    "TypeScript",
+    "Token",
+    "React",
+    "Node.js",
+    "Express",
+    "MongoDB",
+    "API",
+    "Authentication",
+    "Hooks",
+    "useState",
+    "useEffect",
+    "HTML",
+    "CSS",
+    "Routing",
+    "Controller",
+    "Validation",
+  ];
+
+  const handleTagClick = (tag) => {
+    const currentTags = formData.tags;
+
+    const isSelected = currentTags.includes(tag);
+    const updatedTags = isSelected
+      ? currentTags.filter((t) => t !== tag)
+      : [...currentTags, tag];
+
+    setFormData({ ...formData, tags: updatedTags });
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -35,10 +66,7 @@ const CreateSnippet = () => {
     try {
       const payload = {
         ...formData,
-        tags: formData.tags
-          .split(",")
-          .map((tag) => tag.trim().toLowerCase())
-          .filter(Boolean),
+        tags: formData.tags.map((tag) => tag.toLowerCase()),
       };
 
       const token = localStorage.getItem("token");
@@ -121,7 +149,7 @@ const CreateSnippet = () => {
         <input
           type="text"
           name="language"
-          placeholder="Language (e.g. JavaScript, Python)"
+          placeholder="Language (e.g. JavaScript, Typescript, Python...)"
           value={formData.language}
           onChange={handleChange}
           required
@@ -144,15 +172,32 @@ const CreateSnippet = () => {
           onChange={handleChange}
         />
 
-        <label>
-          <input
-            type="checkbox"
-            name="isFavorite"
-            checked={formData.isFavorite}
-            onChange={handleChange}
-          />
-          Mark as Favorite
-        </label>
+        <div className="tag-badges">
+          {suggestedTags.map((tag) => {
+            const isSelected = formData.tags.includes(tag);
+            return (
+              <span
+                key={tag}
+                className={`tag-badge ${isSelected ? "tag-selected" : ""}`}
+                onClick={() => handleTagClick(tag)}
+              >
+                {tag}
+              </span>
+            );
+          })}
+        </div>
+
+        <div className="favorite-toggle">
+          <label>
+            <input
+              type="checkbox"
+              name="isFavorite"
+              checked={formData.isFavorite}
+              onChange={handleChange}
+            />
+            Mark as Favorite
+          </label>
+        </div>
 
         <button type="submit" disabled={isLoading}>
           {isLoading ? "Creating..." : "Create Snippet"}
