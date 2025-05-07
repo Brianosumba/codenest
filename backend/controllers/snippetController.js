@@ -60,3 +60,28 @@ exports.getSnippetById = async (req, res) => {
     res.status(500).json({ message: "Server error fetching snippet" });
   }
 };
+
+//TOGGLE FAVORITE
+exports.toggleFavorite = async (req, res) => {
+  try {
+    const snippet = await Snippet.findOne({
+      _id: req.params.id,
+      userId: req.user.id,
+    });
+
+    if (!snippet) {
+      return res.status(404).json({ message: "Snippet not found" });
+    }
+
+    snippet.isFavorite = !snippet.isFavorite;
+    await snippet.save();
+
+    res.json({
+      message: "Favorite status updated",
+      isFavorite: snippet.isFavorite,
+    });
+  } catch (err) {
+    console.error("Toggle favorite error", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};

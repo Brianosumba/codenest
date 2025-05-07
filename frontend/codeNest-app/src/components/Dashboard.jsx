@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../styles/dashboard.css";
 import { useNavigate, Link } from "react-router-dom";
 import API from "../API/api";
+import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const Dashboard = () => {
   const [error, setError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
 
   const handleCreateSnippet = () => {
     navigate("/create-snippet");
@@ -52,9 +54,12 @@ const Dashboard = () => {
       selectedCategory.toLowerCase() === "all" ||
       snippet.category?.toLowerCase() === selectedCategory.toLowerCase();
 
+    const favoriteMatch = !showFavoritesOnly || snippet.isFavorite;
+
     return (
       (matchTitle || matchLanguage || matchTags || matchCategory) &&
-      categoryMatch
+      categoryMatch &&
+      favoriteMatch
     );
   });
 
@@ -87,6 +92,15 @@ const Dashboard = () => {
         </select>
       </div>
 
+      <label style={{ marginTop: "1rem", display: "block" }}>
+        <input
+          type="checkbox"
+          checked={showFavoritesOnly}
+          onChange={() => setShowFavoritesOnly(!showFavoritesOnly)}
+        />
+        Show only favorites
+      </label>
+
       <div className="recent-snippets">
         <h2>Your Snippets</h2>
         {loading ? (
@@ -102,6 +116,19 @@ const Dashboard = () => {
                 <Link to={`/snippet/${snippet._id}`}>
                   <strong>{snippet.title}</strong> ({snippet.language})
                 </Link>
+                {snippet.isFavorite ? (
+                  <AiFillStar
+                    color="gold"
+                    title="Favorite"
+                    style={{ marginLeft: 8 }}
+                  />
+                ) : (
+                  <AiOutlineStar
+                    color="#ccc"
+                    title="Not Favorite"
+                    style={{ marginLeft: 8 }}
+                  />
+                )}
               </li>
             ))}
           </ul>

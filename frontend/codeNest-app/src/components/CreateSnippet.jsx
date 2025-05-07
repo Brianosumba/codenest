@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import API from "../API/api";
 import "../styles/createSnippet.css";
 import { useNavigate } from "react-router-dom";
+import Toast from "./Toast";
 
 const CreateSnippet = () => {
   const navigate = useNavigate();
@@ -18,6 +19,8 @@ const CreateSnippet = () => {
 
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [showToast, setShowToast] = useState(false);
 
   const suggestedTags = [
     "JavaScript",
@@ -78,6 +81,10 @@ const CreateSnippet = () => {
       });
 
       alert("Snippet created successfully!");
+      setToastMessage("Snippet created successfully!");
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+
       navigate("/dashboard");
     } catch (err) {
       setError(err.response?.data?.message || "Error creating snippet.");
@@ -205,6 +212,8 @@ const CreateSnippet = () => {
 
         {error && <p className="error">{error}</p>}
       </form>
+
+      <Toast message={toastMessage} visible={showToast} />
     </div>
   );
 };
