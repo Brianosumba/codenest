@@ -85,3 +85,27 @@ exports.toggleFavorite = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+//EDIT SNIPPET
+
+exports.updateSnippet = async (req, res) => {
+  try {
+    const snippet = await Snippet.findOneAndUpdate(
+      { _id: req.params.id, userId: req.user.id },
+      req.body,
+      { new: true }
+    );
+
+    if (!snippet) {
+      return res.status(404).json({ message: "Snippet not found" });
+    }
+
+    res.status(200).json({
+      message: "Snippet updated successfully",
+      snippet,
+    });
+  } catch (err) {
+    console.error("Error updating snippet", err);
+    res.status(500).json({ message: "Server error updating snippet" });
+  }
+};

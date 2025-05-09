@@ -21,6 +21,7 @@ const CreateSnippet = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
+  const [toastType, setToastType] = useState("success");
 
   const suggestedTags = [
     "JavaScript",
@@ -80,12 +81,13 @@ const CreateSnippet = () => {
         },
       });
 
-      alert("Snippet created successfully!");
       setToastMessage("Snippet created successfully!");
+      setToastType("create");
       setShowToast(true);
-      setTimeout(() => setShowToast(false), 3000);
-
-      navigate("/dashboard");
+      setTimeout(() => {
+        setShowToast(false);
+        navigate("/dashboard");
+      }, 2000);
     } catch (err) {
       setError(err.response?.data?.message || "Error creating snippet.");
     } finally {
@@ -213,7 +215,7 @@ const CreateSnippet = () => {
         {error && <p className="error">{error}</p>}
       </form>
 
-      <Toast message={toastMessage} visible={showToast} />
+      <Toast message={toastMessage} visible={showToast} type={toastType} />
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import API from "../API/api";
 import "../styles/snippetDetail.css";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -19,6 +19,8 @@ const SnippetDetail = () => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("success");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchSnippet = async () => {
@@ -110,6 +112,13 @@ const SnippetDetail = () => {
           <ReactMarkdown>{snippet.description}</ReactMarkdown>
         </>
       )}
+      <button
+        className="edit-btn"
+        onClick={() => navigate(`/edit-snippet/${snippet._id}`)}
+      >
+        {" "}
+        Edit
+      </button>
       <Toast message={toastMessage} visible={showToast} type={toastType} />
     </div>
   );

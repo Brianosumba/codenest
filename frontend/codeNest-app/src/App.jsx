@@ -7,6 +7,7 @@ import ForgotPassword from "./components/ForgotPassword";
 import Dashboard from "./components/Dashboard";
 import CreateSnippet from "./components/CreateSnippet";
 import SnippetDetail from "./components/SnippetDetail";
+import EditSnippet from "./components/EditSnippet";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/create-snippet" element={<CreateSnippet />} />
         <Route path="/snippet/:id" element={<SnippetDetail />} />
+        <Route path="/edit-snippet/:id" element={<EditSnippet />} />
       </Routes>
     </Router>
   );

@@ -7,7 +7,7 @@
   gap: 10px;
   padding: 12px 18px;
   background-color: #ffffff;
-  border-left: 6px solid #007bff;
+  border-left: 6px solid #007bff; /* default fallback */
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   font-size: 0.95rem;
@@ -18,11 +18,19 @@
 }
 
 .toast-success {
-  border-left-color: #ffc107;
+  border-left-color: #ffc107; /* gold for favorites */
 }
 
 .toast-info {
-  border-left-color: #007bff;
+  border-left-color: #007bff; /* blue for general info */
+}
+
+.toast-edit {
+  border-left-color: #17a2b8; /* teal for edit actions */
+}
+
+.toast-create {
+  border-left-color: #28a745; /* green for created snippet */
 }
 
 .toast-icon {
