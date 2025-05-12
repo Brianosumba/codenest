@@ -60,6 +60,33 @@ const SnippetDetail = () => {
     }
   };
 
+  const handleDelete = async () => {
+    if (!window.confirm("Are you sure you want to delete this snippet?"))
+      return;
+
+    try {
+      const token = localStorage.getItem("token");
+      await API.delete(`/snippets/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      setToastMessage("Snippet deleted");
+      setToastType("delete");
+      setShowToast(true);
+
+      setTimeout(() => {
+        setShowToast(false);
+        navigate("/dashboard");
+      }, 2000);
+    } catch (err) {
+      console.error("Delete error:", err);
+      setToastMessage("Failed to delete snippet");
+      setToastType("info");
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 2000);
+    }
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p className="error">{error}</p>;
   if (!snippet) return <p>No snippet found.</p>;
@@ -118,6 +145,9 @@ const SnippetDetail = () => {
       >
         {" "}
         Edit
+      </button>
+      <button onClick={handleDelete} className="delete-btn">
+        Delete
       </button>
       <Toast message={toastMessage} visible={showToast} type={toastType} />
     </div>

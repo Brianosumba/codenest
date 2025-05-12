@@ -33,6 +33,10 @@
   border-left-color: #28a745; /* green for created snippet */
 }
 
+.toast-delete {
+  border-left-color: #dc3545;
+}
+
 .toast-icon {
   display: flex;
   align-items: center;

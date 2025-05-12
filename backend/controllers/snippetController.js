@@ -87,7 +87,6 @@ exports.toggleFavorite = async (req, res) => {
 };
 
 //EDIT SNIPPET
-
 exports.updateSnippet = async (req, res) => {
   try {
     const snippet = await Snippet.findOneAndUpdate(
@@ -107,5 +106,23 @@ exports.updateSnippet = async (req, res) => {
   } catch (err) {
     console.error("Error updating snippet", err);
     res.status(500).json({ message: "Server error updating snippet" });
+  }
+};
+
+//DELETE SNIPPET
+exports.deleteSnippet = async (req, res) => {
+  try {
+    const snippet = await Snippet.findOneAndDelete({
+      _id: req.params.id,
+      userId: req.user.id,
+    });
+
+    if (!snippet) {
+      return res.status(404).json({ message: "Snippet not found" });
+    }
+    res.json({ message: "Snippet deleted successfully" });
+  } catch (err) {
+    console.error("Error deleting snippet", err);
+    res.status(500).json({ message: "Server error" });
   }
 };

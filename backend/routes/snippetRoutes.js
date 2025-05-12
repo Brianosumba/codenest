@@ -6,6 +6,7 @@ const {
   getSnippetById,
   toggleFavorite,
   updateSnippet,
+  deleteSnippet,
 } = require("../controllers/snippetController");
 const verifyToken = require("../middleware/verifyToken");
 
@@ -23,5 +24,8 @@ router.patch("/:id/favorite", verifyToken, toggleFavorite);
 
 //Update snippet
 router.put("/:id", verifyToken, updateSnippet);
+
+//Delete snippet
+router.delete("/:id", verifyToken, deleteSnippet);
 
 module.exports = router;

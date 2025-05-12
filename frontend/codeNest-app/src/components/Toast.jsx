@@ -5,6 +5,7 @@ import {
   AiOutlineInfoCircle,
   AiFillEdit,
   AiOutlineCheckCircle,
+  AiOutlineDelete,
 } from "react-icons/ai";
 
 const Toast = ({ message, visible, type = "success" }) => {
@@ -15,6 +16,7 @@ const Toast = ({ message, visible, type = "success" }) => {
     info: <AiOutlineInfoCircle color="#007bff" size={20} />,
     edit: <AiFillEdit color="#28a745" size={20} />,
     create: <AiOutlineCheckCircle color="#28a745" size={20} />,
+    delete: <AiOutlineDelete color="#dc3545" size={20} />,
   };
 
   return (
