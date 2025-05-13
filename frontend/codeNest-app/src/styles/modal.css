@@ -1,0 +1,95 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px); /* glass effect */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 16px;
+  padding: 2rem 2.5rem;
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-icon {
+  margin-bottom: 1rem;
+}
+
+.modal-icon svg {
+  width: 60px;
+  height: 60px;
+  color: #dc3545;
+}
+
+.modal-content h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* DELETE button */
+.btn-confirm {
+  background: linear-gradient(135deg, #ff4d4d, #c82333);
+  color: white;
+  padding: 0.7rem 1.6rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-confirm:hover {
+  background: #a71d2a;
+  transform: scale(1.05);
+}
+
+/* CANCEL button */
+.btn-cancel {
+  background: #f1f1f1;
+  color: #333;
+  padding: 0.7rem 1.6rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+  background: #e0e0e0;
+  transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

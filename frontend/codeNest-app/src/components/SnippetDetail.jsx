@@ -7,6 +7,7 @@ import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import ReactMarkdown from "react-markdown";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import Toast from "../components/Toast";
+import ConfrimModal from "./ConfirmModal";
 
 const SnippetDetail = () => {
   const { id } = useParams();
@@ -19,6 +20,7 @@ const SnippetDetail = () => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("success");
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const navigate = useNavigate();
 
@@ -61,16 +63,13 @@ const SnippetDetail = () => {
   };
 
   const handleDelete = async () => {
-    if (!window.confirm("Are you sure you want to delete this snippet?"))
-      return;
-
     try {
       const token = localStorage.getItem("token");
       await API.delete(`/snippets/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      setToastMessage("Snippet deleted");
+      setToastMessage("Snippet deleted successfully");
       setToastType("delete");
       setShowToast(true);
 
@@ -146,9 +145,19 @@ const SnippetDetail = () => {
         {" "}
         Edit
       </button>
-      <button onClick={handleDelete} className="delete-btn">
+      <button onClick={() => setShowConfirm(true)} className="delete-btn">
         Delete
       </button>
+      {showConfirm && (
+        <ConfrimModal
+          message="Are you sure you want to delete this snippet?"
+          onConfirm={() => {
+            setShowConfirm(false);
+            handleDelete();
+          }}
+          onCancel={() => setShowConfirm(false)}
+        />
+      )}
       <Toast message={toastMessage} visible={showToast} type={toastType} />
     </div>
   );
