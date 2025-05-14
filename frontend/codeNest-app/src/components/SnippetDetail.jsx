@@ -8,6 +8,7 @@ import ReactMarkdown from "react-markdown";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import Toast from "../components/Toast";
 import ConfrimModal from "./ConfirmModal";
+import SnippetExportSingle from "./SnippetExportSingle";
 
 const SnippetDetail = () => {
   const { id } = useParams();
@@ -158,6 +159,8 @@ const SnippetDetail = () => {
           onCancel={() => setShowConfirm(false)}
         />
       )}
+
+      <SnippetExportSingle snippet={snippet} />
       <Toast message={toastMessage} visible={showToast} type={toastType} />
     </div>
   );
