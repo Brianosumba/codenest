@@ -2,8 +2,16 @@ const Snippet = require("../models/Snippet");
 
 //CREATE NEW SNIPPETS
 exports.createSnippet = async (req, res) => {
-  const { title, code, description, language, category, tags, isFavorite } =
-    req.body;
+  const {
+    title,
+    code,
+    description,
+    language,
+    category,
+    tags,
+    isFavorite,
+    type,
+  } = req.body;
 
   const cleanTags = Array.isArray(tags)
     ? tags.filter((tag) => tag && tag.trim() !== "")
@@ -18,6 +26,7 @@ exports.createSnippet = async (req, res) => {
       category,
       tags: cleanTags,
       isFavorite,
+      type,
       userId: req.user.id,
     });
 
