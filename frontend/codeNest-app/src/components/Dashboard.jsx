@@ -3,7 +3,6 @@ import "../styles/dashboard.css";
 import { useNavigate, Link } from "react-router-dom";
 import API from "../API/api";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import SnippetExport from "./SnippetExportSingle";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -138,6 +137,15 @@ const Dashboard = () => {
 
       <div className="cta-snippet">
         <button onClick={handleCreateSnippet}>Create New Snippet</button>
+      </div>
+
+      <div className="dashboard-action">
+        <button
+          className="public-snippets-btn"
+          onClick={() => navigate("/shared")}
+        >
+          View Public Snippets
+        </button>
       </div>
     </div>
   );

@@ -1,0 +1,28 @@
+.toggle-share-container {
+  margin-top: 1rem;
+}
+
+.share-toggle-btn {
+  background-color: #6366f1;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.share-toggle-btn:hover {
+  background-color: #4f46e5;
+}
+
+.share-toggle-btn.shared {
+  background-color: #10b981;
+}
+
+.error {
+  color: red;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}

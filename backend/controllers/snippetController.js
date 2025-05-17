@@ -135,3 +135,40 @@ exports.deleteSnippet = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+// Toggles a snippet's sharing status between private and public.
+exports.shareSnippet = async (req, res) => {
+  try {
+    const snippet = await Snippet.findById(req.params.id);
+
+    if (!snippet) {
+      return res.status(404).json({ message: "Snippet not found" });
+    }
+
+    //Ensure only the owner can toggle between private or public
+    if (snippet.userId.toString() !== req.user.id) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    snippet.isShared = req.body.isShared;
+    await snippet.save();
+
+    res.json({ isShared: snippet.isShared });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to update sharing status" });
+  }
+};
+
+// GET SHARED SNIPPETS
+exports.getSharedSnippets = async (req, res) => {
+  try {
+    const sharedSnippets = await Snippet.find({ isShared: true }).sort({
+      createdAt: -1,
+    });
+    res.json(sharedSnippets);
+  } catch (err) {
+    console.error("Error in getSharedSnippets:", err);
+    res.status(500).json({ message: "Failed to load shared snippets" });
+  }
+};

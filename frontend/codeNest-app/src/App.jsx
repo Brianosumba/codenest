@@ -8,6 +8,7 @@ import Dashboard from "./components/Dashboard";
 import CreateSnippet from "./components/CreateSnippet";
 import SnippetDetail from "./components/SnippetDetail";
 import EditSnippet from "./components/EditSnippet";
+import SharedSnippets from "./components/SharedSnippet";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/create-snippet" element={<CreateSnippet />} />
         <Route path="/snippet/:id" element={<SnippetDetail />} />
         <Route path="/edit-snippet/:id" element={<EditSnippet />} />
+        <Route path="/shared" element={<SharedSnippets />} />
       </Routes>
     </Router>
   );

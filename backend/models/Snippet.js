@@ -31,6 +31,7 @@ const snippetSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    isShared: { type: Boolean, default: false },
     type: {
       type: String,
       enum: ["frontend", "backend", "framework"],

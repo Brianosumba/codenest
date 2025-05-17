@@ -9,6 +9,7 @@ import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import Toast from "../components/Toast";
 import ConfrimModal from "./ConfirmModal";
 import SnippetExportSingle from "./SnippetExportSingle";
+import ToggleShareButton from "./ToggleShareButton";
 
 const SnippetDetail = () => {
   const { id } = useParams();
@@ -111,6 +112,11 @@ const SnippetDetail = () => {
             <AiOutlineStar size={24} color="gray" />
           )}
         </button>
+
+        <ToggleShareButton
+          snippetId={snippet._id}
+          isSharedInitial={snippet.isShared}
+        />
       </div>
       <p>
         <strong>Language:</strong>
