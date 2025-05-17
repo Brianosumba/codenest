@@ -1,5 +1,6 @@
 import { useState } from "react";
 import API from "../API/api";
+import Toast from "./Toast";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import ReactMarkdown from "react-markdown";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -10,6 +11,10 @@ const PublicSnippetCard = ({ snippet }) => {
   const [expanded, setExpanded] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
+
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("success");
 
   const toggleExpand = () => setExpanded(!expanded);
 
@@ -35,9 +40,17 @@ const PublicSnippetCard = ({ snippet }) => {
       });
 
       setSaved(true);
+      setToastMessage("Snippet saved to your dashboard");
+      setToastType("saved");
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 2000);
     } catch (err) {
       console.error("Failed to save snippet", err);
       setError("Error saving snippet.");
+      setToastMessage("Failed to save snippet.");
+      setToastType("error");
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 2000);
     }
   };
 
@@ -94,6 +107,8 @@ const PublicSnippetCard = ({ snippet }) => {
       </div>
 
       {error && <p className="error">{error}</p>}
+
+      <Toast message={toastMessage} visible={showToast} type={toastType} />
     </div>
   );
 };

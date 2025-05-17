@@ -1,4 +1,3 @@
-import React from "react";
 import "../styles/toast.css";
 import {
   AiFillStar,
@@ -7,6 +6,7 @@ import {
   AiOutlineCheckCircle,
   AiOutlineDelete,
 } from "react-icons/ai";
+import { GiPartyPopper } from "react-icons/gi";
 
 const Toast = ({ message, visible, type = "success" }) => {
   if (!visible) return null;
@@ -17,6 +17,7 @@ const Toast = ({ message, visible, type = "success" }) => {
     edit: <AiFillEdit color="#28a745" size={20} />,
     create: <AiOutlineCheckCircle color="#28a745" size={20} />,
     delete: <AiOutlineDelete color="#dc3545" size={20} />,
+    saved: <GiPartyPopper className="popper-icon" color="#f50057" size={24} />,
   };
 
   return (
