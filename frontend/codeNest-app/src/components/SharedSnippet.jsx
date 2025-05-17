@@ -1,34 +1,28 @@
 import React, { useEffect, useState } from "react";
 import API from "../API/api";
-import { useNavigate } from "react-router-dom";
 import "../styles/sharedSnippets.css";
+
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import ReactMarkdown from "react-markdown";
 
 const SharedSnippets = () => {
   const [snippets, setSnippets] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchSharedSnippets = async () => {
       try {
-        const token = localStorage.getItem("token");
-
-        const res = await API.get("/snippets/shared", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
+        const res = await API.get("/snippets/shared");
         setSnippets(res.data);
       } catch (err) {
-        console.error(err);
+        console.error("Failed to fetch shared snippets", err);
         setError("Failed to load shared snippets.");
       } finally {
         setLoading(false);
       }
     };
-
     fetchSharedSnippets();
   }, []);
 
@@ -37,42 +31,46 @@ const SharedSnippets = () => {
 
   return (
     <div className="shared-snippets-container">
-      <h2>Public Snippets</h2>
+      <h2>🌍 Public Snippets</h2>
       {snippets.length === 0 ? (
-        <p>No shared snippets yet.</p>
+        <p>No public snippets found.</p>
       ) : (
-        <div className="snippet-grid">
-          {snippets.map((snippet) => (
-            <div
-              key={snippet._id}
-              className="snippet-card"
-              onClick={() => navigate(`/snippets/${snippet._id}`)}
+        snippets.map((snippet) => (
+          <div key={snippet._id} className="snippet-card">
+            <h3>{snippet.title}</h3>
+            <p>
+              <strong>Language:</strong> {snippet.language}
+            </p>
+            <p>
+              <strong>Category:</strong> {snippet.category}
+            </p>
+            <p>
+              <strong>Tags:</strong>{" "}
+              {Array.isArray(snippet.tags)
+                ? snippet.tags.join(", ")
+                : snippet.tags}
+            </p>
+
+            {/* Description */}
+            {snippet.description && (
+              <>
+                <h4>Description</h4>
+                <ReactMarkdown>{snippet.description}</ReactMarkdown>
+              </>
+            )}
+
+            {/* Code */}
+            <h4>Code</h4>
+            <SyntaxHighlighter
+              language={snippet.language?.toLowerCase() || "javascript"}
+              style={oneDark}
+              showLineNumbers
+              wrapLongLines
             >
-              <h3>{snippet.title}</h3>
-              <p>
-                <strong>Language:</strong>
-                {snippet.language}
-              </p>
-              <p>
-                <strong>Category:</strong>
-                {snippet.category}
-              </p>
-              {snippet.description && (
-                <p className="snippet-description">
-                  {snippet.description.slice(0, 120)}...
-                </p>
-              )}
-              <div className="tags">
-                {snippet.tags &&
-                  snippet.tags.map((tag, index) => (
-                    <span key={index} className="tag">
-                      #{tag}
-                    </span>
-                  ))}
-              </div>
-            </div>
-          ))}
-        </div>
+              {snippet.code}
+            </SyntaxHighlighter>
+          </div>
+        ))
       )}
     </div>
   );
