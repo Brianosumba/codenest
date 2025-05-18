@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../API/api";
 import "../styles/createSnippet.css";
@@ -22,6 +22,7 @@ const CreateSnippet = () => {
     code: "",
     description: "",
     language: "",
+    framework: "",
     category: "",
     tags: [],
     isFavorite: false,
@@ -55,11 +56,13 @@ const CreateSnippet = () => {
   ];
 
   const getMonacoLanguage = () => {
-    if (formData.type === "framework") {
-      const baseLang = frameworkLanguageMap[formData.language];
+    const selectedLang = formData.language;
+
+    if (frameworkLanguageMap[selectedLang]) {
+      const baseLang = frameworkLanguageMap[selectedLang];
       return languageToMonacoId[baseLang] || "javascript";
     }
-    return languageToMonacoId[formData.language] || "javascript";
+    return languageToMonacoId[selectedLang] || "javascript";
   };
 
   const getMarkdownSuggestions = (text) => {
@@ -157,7 +160,6 @@ const CreateSnippet = () => {
           onChange={handleChange}
           required
         />
-
         {/*Typ + språk / ramverk*/}
         <SnippetTypeSelector
           type={formData.type}
@@ -165,6 +167,9 @@ const CreateSnippet = () => {
           onTypeChange={(value) => setFormData({ ...formData, type: value })}
           onLanguageChange={(value) =>
             setFormData({ ...formData, language: value })
+          }
+          onFrameworkChange={(value) =>
+            setFormData({ ...formData, framework: value })
           }
         />
 
@@ -186,7 +191,6 @@ const CreateSnippet = () => {
             }}
           />
         </section>
-
         {/* Beskrivning */}
         <section className="form-section">
           <h3> Description (Markdown)</h3>
@@ -218,7 +222,6 @@ const CreateSnippet = () => {
             )}
           </div>
         </section>
-
         {/* Kategori */}
         <input
           type="text"
@@ -228,7 +231,6 @@ const CreateSnippet = () => {
           onChange={handleChange}
           required
         />
-
         {/* Taggar */}
         <section className="form-section">
           <h3>Tags</h3>
@@ -262,7 +264,6 @@ const CreateSnippet = () => {
             ))}
           </div>
         </section>
-
         {/* Favorit*/}
         <div className="favorite-toggle">
           <label>
@@ -275,12 +276,10 @@ const CreateSnippet = () => {
             Mark as Favorite
           </label>
         </div>
-
         {/* Skicka */}
         <button type="submit" disabled={isLoading}>
           {isLoading ? "Creating..." : "Create Snippet"}
         </button>
-
         {error && <p className="error">{error}</p>}
       </form>
 
