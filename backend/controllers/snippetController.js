@@ -7,6 +7,7 @@ exports.createSnippet = async (req, res) => {
     code,
     description,
     language,
+    framework,
     category,
     tags,
     isFavorite,
@@ -17,12 +18,27 @@ exports.createSnippet = async (req, res) => {
     ? tags.filter((tag) => tag && tag.trim() !== "")
     : [];
 
+  //Validera att språk finns
+  if (!language || language.trim() === "") {
+    return res.status(400).json({
+      message: "Language is required.",
+    });
+  }
+
+  // Validera att framework är med om typen är "framework"
+  if (type === "framework" && (!framework || framework.trim() === "")) {
+    return res.status(400).json({
+      message: "Framework is required for framework snippets.",
+    });
+  }
+
   try {
     const newSnippet = new Snippet({
       title,
       code,
       description,
       language,
+      framework,
       category,
       tags: cleanTags,
       isFavorite,

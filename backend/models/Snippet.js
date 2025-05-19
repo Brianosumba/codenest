@@ -19,6 +19,7 @@ const snippetSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    framework: { type: String, default: "" },
     category: {
       type: String,
       required: true,

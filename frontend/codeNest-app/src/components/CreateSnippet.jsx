@@ -8,10 +8,7 @@ import Editor from "@monaco-editor/react";
 import ReactMarkdown from "react-markdown";
 import SnippetTypeSelector from "./SnippetTypeSelector";
 
-import {
-  frameworkLanguageMap,
-  languageToMonacoId,
-} from "../config/snippetConfig";
+import { languageToMonacoId } from "../config/snippetConfig";
 
 const CreateSnippet = () => {
   const navigate = useNavigate();
@@ -56,13 +53,8 @@ const CreateSnippet = () => {
   ];
 
   const getMonacoLanguage = () => {
-    const selectedLang = formData.language;
-
-    if (frameworkLanguageMap[selectedLang]) {
-      const baseLang = frameworkLanguageMap[selectedLang];
-      return languageToMonacoId[baseLang] || "javascript";
-    }
-    return languageToMonacoId[selectedLang] || "javascript";
+    if (!formData.language) return "javascript";
+    return languageToMonacoId[formData.language] || "javascript";
   };
 
   const getMarkdownSuggestions = (text) => {
@@ -161,18 +153,20 @@ const CreateSnippet = () => {
           required
         />
         {/*Typ + språk / ramverk*/}
+
         <SnippetTypeSelector
           type={formData.type}
           language={formData.language}
-          onTypeChange={(value) => setFormData({ ...formData, type: value })}
+          onTypeChange={(value) =>
+            setFormData((prev) => ({ ...prev, type: value }))
+          }
           onLanguageChange={(value) =>
-            setFormData({ ...formData, language: value })
+            setFormData((prev) => ({ ...prev, language: value }))
           }
           onFrameworkChange={(value) =>
-            setFormData({ ...formData, framework: value })
+            setFormData((prev) => ({ ...prev, framework: value }))
           }
         />
-
         {/* Kod */}
         <section className="form-section">
           <h3>Code</h3>

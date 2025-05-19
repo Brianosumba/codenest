@@ -16,20 +16,24 @@ const SnippetTypeSelector = ({
   onFrameworkChange,
 }) => {
   const [frameworkCategory, setFrameworkCategory] = useState("");
+  const [selectedFramework, setSelectedFramework] = useState("");
+
+  console.log("RENDER - Props:", { type, language });
 
   const handleFrameworkSelect = (framework) => {
-    const detectedLanguage = frameworkLanguageMap[framework] || "JavaScript";
+    setSelectedFramework(framework);
     onFrameworkChange(framework);
-    onLanguageChange(detectedLanguage);
-    console.log(`Framework selected: ${framework} => ${detectedLanguage}`);
+    onLanguageChange("");
   };
 
   const handleTypeChange = (e) => {
+    console.log("Type selected:", e.target.value);
     const selectedType = e.target.value;
     onTypeChange(selectedType);
-    onlanguagechange("");
+    onLanguageChange("");
     onFrameworkChange("");
     setFrameworkCategory("");
+    setSelectedFramework("");
   };
 
   const handleFrameworkCategoryChange = (e) => {
@@ -37,6 +41,7 @@ const SnippetTypeSelector = ({
     setFrameworkCategory(category);
     onFrameworkChange("");
     onLanguageChange("");
+    setSelectedFramework("");
   };
 
   return (
@@ -125,6 +130,26 @@ const SnippetTypeSelector = ({
                   </option>
                 ))}
               </select>
+            )}
+
+            {selectedFramework && frameworkCategory && (
+              <>
+                <label>Choose language for {selectedFramework}:</label>
+                <select
+                  value={language}
+                  onChange={(e) => onLanguageChange(e.target.value)}
+                  required
+                >
+                  <option value="">--Select Language--</option>
+                  {["JavaScript", "TypeScript"].map((lang) => (
+                    <option key={lang} value={lang}>
+                      {lang === "JavaScript"
+                        ? "JavaScript (JS/JSX)"
+                        : "TypeScript (TS/TSX)"}
+                    </option>
+                  ))}
+                </select>
+              </>
             )}
           </>
         )}
