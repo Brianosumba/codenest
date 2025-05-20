@@ -22,13 +22,14 @@ const PublicSnippetCard = ({ snippet }) => {
     try {
       const token = localStorage.getItem("token");
       const payload = {
-        title: snippet.title,
-        code: snippet.code,
-        description: snippet.description,
-        language: snippet.language,
-        category: snippet.category,
-        tags: snippet.tags,
-        type: snippet.type,
+        title: snippet.title || "",
+        code: snippet.code || "",
+        description: snippet.description || "",
+        language: snippet.language || "",
+        category: snippet.category || "",
+        tags: Array.isArray(snippet.tags) ? snippet.tags : [],
+        type: snippet.type || "",
+        framework: snippet.framework || "",
         isFavorite: false,
         isShared: false,
       };
