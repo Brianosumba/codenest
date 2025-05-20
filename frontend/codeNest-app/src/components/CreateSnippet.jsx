@@ -83,14 +83,6 @@ const CreateSnippet = () => {
     return suggestions;
   };
 
-  const handleTagClick = (tag) => {
-    const isSelected = formData.tags.includes(tag);
-    const updatedTags = isSelected
-      ? formData.tags.filter((t) => t !== tag)
-      : [...formData.tags, tag];
-    setFormData({ ...formData, tags: updatedTags });
-  };
-
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -236,28 +228,67 @@ const CreateSnippet = () => {
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
-                if (tagInput.trim()) {
-                  handleTagClick(tagInput.trim());
-                  setTagInput("");
+                const newTag = tagInput.trim().toLowerCase();
+
+                if (newTag && !formData.tags.includes(newTag)) {
+                  setFormData((prev) => ({
+                    ...prev,
+                    tags: [...(prev.tags || []), newTag],
+                  }));
                 }
+                setTagInput("");
               }
             }}
           />
-
+          {/* Suggested Tags */}
           <div className="tag-badges">
-            {suggestedTags.map((tag) => (
-              <span
-                key={tag}
-                className={`tag-badge ${
-                  formData.tags.includes(tag) ? "tag-selected" : ""
-                }`}
-                onClick={() => handleTagClick(tag)}
-              >
+            {suggestedTags.map((tag) => {
+              const formattedTag = tag.toLowerCase();
+              const alreadySelected = formData.tags.includes(formattedTag);
+
+              return (
+                <span
+                  key={tag}
+                  className={`tag-badge ${
+                    alreadySelected ? "tag-selected" : ""
+                  }`}
+                  onClick={() => {
+                    if (!alreadySelected) {
+                      setFormData((prev) => ({
+                        ...prev,
+                        tags: [...(prev.tags || []), formattedTag],
+                      }));
+                    }
+                    setTagInput(formattedTag); // 🖊️ Sätter i inputfältet för ev. redigering
+                  }}
+                >
+                  {tag}
+                </span>
+              );
+            })}
+          </div>
+
+          {/* Selected tags as editable/removable badges */}
+          <div className="selected-tags">
+            {formData.tags.map((tag) => (
+              <span key={tag} className="tag-badge tag-selected">
                 {tag}
+                <button
+                  type="button"
+                  onClick={() =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      tags: prev.tags.filter((t) => t !== tag),
+                    }))
+                  }
+                >
+                  ✕
+                </button>
               </span>
             ))}
           </div>
         </section>
+
         {/* Favorit*/}
         <div className="favorite-toggle">
           <label>
