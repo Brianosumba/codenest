@@ -7,6 +7,7 @@ import Toast from "./Toast";
 import Editor from "@monaco-editor/react";
 import ReactMarkdown from "react-markdown";
 import SnippetTypeSelector from "./SnippetTypeSelector";
+import TagInput from "./TagInput";
 
 import { languageToMonacoId } from "../config/snippetConfig";
 
@@ -25,32 +26,11 @@ const CreateSnippet = () => {
     isFavorite: false,
   });
 
-  const [tagInput, setTagInput] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [toastType, setToastType] = useState("success");
-
-  const suggestedTags = [
-    "JavaScript",
-    "TypeScript",
-    "Token",
-    "React",
-    "Node.js",
-    "Express",
-    "MongoDB",
-    "API",
-    "Authentication",
-    "Hooks",
-    "useState",
-    "useEffect",
-    "HTML",
-    "CSS",
-    "Routing",
-    "Controller",
-    "Validation",
-  ];
 
   const getMonacoLanguage = () => {
     if (!formData.language) return "javascript";
@@ -218,76 +198,12 @@ const CreateSnippet = () => {
           required
         />
         {/* Taggar */}
-        <section className="form-section">
-          <h3>Tags</h3>
-          <input
-            type="text"
-            placeholder="Add tags and press Enter"
-            value={tagInput}
-            onChange={(e) => setTagInput(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                const newTag = tagInput.trim().toLowerCase();
-
-                if (newTag && !formData.tags.includes(newTag)) {
-                  setFormData((prev) => ({
-                    ...prev,
-                    tags: [...(prev.tags || []), newTag],
-                  }));
-                }
-                setTagInput("");
-              }
-            }}
-          />
-          {/* Suggested Tags */}
-          <div className="tag-badges">
-            {suggestedTags.map((tag) => {
-              const formattedTag = tag.toLowerCase();
-              const alreadySelected = formData.tags.includes(formattedTag);
-
-              return (
-                <span
-                  key={tag}
-                  className={`tag-badge ${
-                    alreadySelected ? "tag-selected" : ""
-                  }`}
-                  onClick={() => {
-                    if (!alreadySelected) {
-                      setFormData((prev) => ({
-                        ...prev,
-                        tags: [...(prev.tags || []), formattedTag],
-                      }));
-                    }
-                    setTagInput(formattedTag); // 🖊️ Sätter i inputfältet för ev. redigering
-                  }}
-                >
-                  {tag}
-                </span>
-              );
-            })}
-          </div>
-
-          {/* Selected tags as editable/removable badges */}
-          <div className="selected-tags">
-            {formData.tags.map((tag) => (
-              <span key={tag} className="tag-badge tag-selected">
-                {tag}
-                <button
-                  type="button"
-                  onClick={() =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      tags: prev.tags.filter((t) => t !== tag),
-                    }))
-                  }
-                >
-                  ✕
-                </button>
-              </span>
-            ))}
-          </div>
-        </section>
+        <TagInput
+          value={formData.tags}
+          onChange={(updatedTags) =>
+            setFormData((prev) => ({ ...prev, tags: updatedTags }))
+          }
+        />
 
         {/* Favorit*/}
         <div className="favorite-toggle">

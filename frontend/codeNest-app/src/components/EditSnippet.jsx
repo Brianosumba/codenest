@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import API from "../API/api";
 import "../styles/createSnippet.css";
@@ -7,6 +7,7 @@ import Toast from "./Toast";
 import Editor from "@monaco-editor/react";
 import ReactMarkdown from "react-markdown";
 import SnippetTypeSelector from "./SnippetTypeSelector";
+import TagInput from "./TagInput";
 
 import {
   frameworkLanguageMap,
@@ -18,28 +19,12 @@ const EditSnippet = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState(null);
-  const [tagInput, setTagInput] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("success");
-
-  const suggestedTags = [
-    "JavaScript",
-    "TypeScript",
-    "React",
-    "Node.js",
-    "Express",
-    "MongoDB",
-    "API",
-    "Authentication",
-    "HTML",
-    "CSS",
-    "Routing",
-    "Validation",
-  ];
 
   useEffect(() => {
     const fetchSnippet = async () => {
@@ -69,14 +54,6 @@ const EditSnippet = () => {
       return languageToMonacoId[baseLang] || "javascript";
     }
     return languageToMonacoId[formData.language] || "javascript";
-  };
-
-  const handleTagClick = (tag) => {
-    const isSelected = formData.tags.includes(tag);
-    const updatedTags = isSelected
-      ? formData.tags.filter((t) => t !== tag)
-      : [...formData.tags, tag];
-    setFormData({ ...formData, tags: updatedTags });
   };
 
   const handleChange = (e) => {
@@ -190,37 +167,12 @@ const EditSnippet = () => {
         />
 
         {/* Taggar */}
-        <section className="form-section">
-          <h3>🏷️ Tags</h3>
-          <input
-            type="text"
-            placeholder="Add tag and press Enter"
-            value={tagInput}
-            onChange={(e) => setTagInput(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                if (tagInput.trim()) {
-                  handleTagClick(tagInput.trim());
-                  setTagInput("");
-                }
-              }
-            }}
-          />
-          <div className="tag-badges">
-            {suggestedTags.map((tag) => (
-              <span
-                key={tag}
-                className={`tag-badge ${
-                  formData.tags.includes(tag) ? "tag-selected" : ""
-                }`}
-                onClick={() => handleTagClick(tag)}
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </section>
+        <TagInput
+          value={formData.tags}
+          onChange={(updatedTags) =>
+            setFormData((prev) => ({ ...prev, tags: updatedTags }))
+          }
+        />
 
         {/* Favorit */}
         <div className="favorite-toggle">
