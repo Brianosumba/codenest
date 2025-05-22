@@ -18,6 +18,7 @@ const Login = () => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
+
     try {
       const res = await API.post("/auth/login", formData);
       console.log(res.data);
@@ -26,8 +27,16 @@ const Login = () => {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("username", res.data.user.username);
 
-      alert("Login successful! Redirecting...");
-      navigate("/dashboard");
+      const user = res.data.user;
+      const hasRole = user.role && user.role.trim().length > 0;
+
+      if (hasRole) {
+        alert(`Welcome back, ${user.username}! 👋`);
+        navigate("/dashboard");
+      } else {
+        alert(`Welcome ${user.username}! Let's set up your profile`);
+        navigate("/profile");
+      }
     } catch (err) {
       setError(err.response?.data?.message || "Login error.");
     } finally {

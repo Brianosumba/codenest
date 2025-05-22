@@ -1,0 +1,52 @@
+const User = require("../models/User");
+
+exports.getMe = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({
+      id: user._id,
+      name: user.username,
+      email: user.email,
+      role: user.role || "",
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Server error, could not find user" });
+  }
+};
+
+exports.updateMe = async (req, res) => {
+  try {
+    const { role } = req.body;
+
+    if (!role) {
+      return res.status(400).json({ message: "Role is required" });
+    }
+
+    const user = await User.findByIdAndUpdate(
+      req.user.id,
+      { role },
+      { new: true, runValidators: true }
+    ).select("-password");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({
+      message: "User updated successfully",
+      user: {
+        id: user._id,
+        name: user.username,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to update user" });
+  }
+};

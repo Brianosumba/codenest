@@ -1,29 +1,46 @@
-import React from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/navbar.css";
 
-const Navbar = () => {
+const Navbar = ({ user, setUser }) => {
   const navigate = useNavigate();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    setUser(null);
     navigate("/login");
   };
-
-  const isLoggedIn = !!localStorage.getItem("token");
 
   return (
     <nav className="navbar">
       <div className="navbar-logo" onClick={() => navigate("/")}>
         CodeNest
       </div>
+
       <div className="navbar-links">
-        {isLoggedIn ? (
-          <>
-            <button onClick={handleLogout} className="logout-button">
-              Logout
-            </button>
-          </>
+        {user ? (
+          <div className="user-menu">
+            <div
+              className="user-info"
+              onClick={() => setDropdownOpen((prev) => !prev)}
+            >
+              <span className="user-icon">👤</span>
+              <div className="user-meta">
+                <strong>{user.name}</strong>
+                {user.role && <small className="user-role">{user.role}</small>}
+              </div>
+            </div>
+
+            {dropdownOpen && (
+              <div className="dropdown">
+                <button onClick={() => navigate("/profile")}>
+                  ⚙️ Profile Settings
+                </button>
+                <button onClick={handleLogout}> Logout</button>
+              </div>
+            )}
+          </div>
         ) : (
           <>
             <button onClick={() => navigate("/login")} className="nav-button">
