@@ -41,10 +41,10 @@ const RoleModal = ({ user, setUser, onClose, showToast }) => {
           <option value="">-- Select a role --</option>
 
           <optgroup label="📘 Studentroller">
-            <option value="Frontend Student">📗 Frontend Stud</option>
-            <option value="Backend Student">📘 Backend Stud</option>
-            <option value="Fullstack Student">📙 Fullstack Stud</option>
-            <option value="New to Coding">📕 New Coder</option>
+            <option value="Frontend Student">📗 Frontend Student</option>
+            <option value="Backend Student">📘 Backend Student</option>
+            <option value="Fullstack Student">📙 Fullstack Student</option>
+            <option value="New to Coding">📕 Beginner</option>
           </optgroup>
 
           <optgroup label="💼 Yrkesroller">
@@ -55,7 +55,7 @@ const RoleModal = ({ user, setUser, onClose, showToast }) => {
             <option value="Junior Fullstack Developer">
               🔵 Jr Fullstack Dev
             </option>
-            <option value="Mid-level Developer">⚪ Mid Dev</option>
+            <option value="Mid-level Developer">⚪ Experienced Dev</option>
             <option value="Senior Developer">🟣 Senior Dev</option>
           </optgroup>
 
