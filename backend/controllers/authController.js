@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const generateDefaultSnippets = require("../utils/defaultSnippets");
 
 // REGISTER
 exports.register = async (req, res) => {
@@ -26,7 +27,20 @@ exports.register = async (req, res) => {
 
     await newUser.save();
 
-    res.status(201).json({ message: "User registered successfully." });
+    await generateDefaultSnippets(newUser._id);
+
+    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
+
+    res.status(201).json({
+      message: "User registered successfully.",
+      token,
+      user: {
+        id: newUser._id,
+        username: newUser.username,
+        email: newUser.email,
+        role: "",
+      },
+    });
   } catch (err) {
     console.error("Error during registration", err);
     res.status(500).json({ message: "Server error during registration." });

@@ -114,7 +114,13 @@ const Dashboard = () => {
             {filteredSnippets.map((snippet) => (
               <li key={snippet._id}>
                 <Link to={`/snippet/${snippet._id}`}>
-                  <strong>{snippet.title}</strong> ({snippet.language})
+                  <strong>{snippet.title}</strong>
+                  {snippet.starter && (
+                    <span className="starter-badge" title="Starter snippet">
+                      Starter Snippets
+                    </span>
+                  )}
+                  ({snippet.language})
                 </Link>
                 {snippet.isFavorite ? (
                   <AiFillStar

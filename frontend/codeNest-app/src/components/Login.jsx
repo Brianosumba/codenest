@@ -27,16 +27,7 @@ const Login = () => {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("username", res.data.user.username);
 
-      const user = res.data.user;
-      const hasRole = user.role && user.role.trim().length > 0;
-
-      if (hasRole) {
-        alert(`Welcome back, ${user.username}! 👋`);
-        navigate("/dashboard");
-      } else {
-        alert(`Welcome ${user.username}! Let's set up your profile`);
-        navigate("/profile");
-      }
+      navigate("/dashboard");
     } catch (err) {
       setError(err.response?.data?.message || "Login error.");
     } finally {

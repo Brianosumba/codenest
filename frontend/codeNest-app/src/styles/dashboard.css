@@ -140,6 +140,17 @@
   background-color: #4338ca;
 }
 
+.starter-badge {
+  background-color: #fde68a;
+  color: #111;
+  padding: 2px 6px;
+  margin-left: 6px;
+  font-size: 0.7rem;
+  border-radius: 8px;
+  font-weight: 500;
+  display: inline-block;
+}
+
 /* RESPONSIVE DASHBOARD */
 @media (max-width: 768px) {
   .summary-cards {
