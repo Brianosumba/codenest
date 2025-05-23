@@ -22,11 +22,22 @@ const Register = () => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
+
     try {
-      const res = await API.post("/auth/register", formData);
-      console.log(res.data);
+      await API.post("/auth/register", formData);
+
+      const loginRes = await API.post("/auth/login", {
+        email: formData.email,
+        password: formData.password,
+      });
+
+      const { token, user } = loginRes.data;
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("username", user.username);
+
       alert("Registration successful! You can now log in.");
-      navigate("/login");
+      navigate("/dashboard");
     } catch (err) {
       setError(err.response?.data?.message || "Registration error.");
     } finally {

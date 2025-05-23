@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import API from "../API/api";
-import "../styles/roleModal.css";
+import "../styles/profileSettings.css";
 
-const RoleModal = ({ user, setUser, onClose, showToast }) => {
-  const [selectedRole, setSelectedRole] = useState("");
+const ProfileSettings = ({ user, setUser, showToast }) => {
+  const [selectedRole, setSelectedRole] = useState(user?.role || "");
   const [rolesData, setRolesData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loadingRoles, setLoadingRoles] = useState(true);
 
   useEffect(() => {
     const fetchRoles = async () => {
@@ -16,50 +17,54 @@ const RoleModal = ({ user, setUser, onClose, showToast }) => {
       } catch (err) {
         setError("Failed to load roles.");
       } finally {
-        setLoading(false);
+        setLoadingRoles(false);
       }
     };
-
     fetchRoles();
   }, []);
 
-  const handleSave = async () => {
+  const handleUpdate = async () => {
     if (!selectedRole) {
-      setError("To continue, please choose a role");
+      setError("Please select a role");
       return;
     }
+    setError(""), setLoading(true);
 
     try {
       const token = localStorage.getItem("token");
       const res = await API.put(
         "/users/me",
         { role: selectedRole },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
+
       setUser(res.data.user);
-      showToast("Role saved successfully", "success");
-      onClose();
+      showToast("Your rol was updated", "sucess");
     } catch (err) {
-      setError("Could not save role. Please try again.");
+      setError("Could not update role. Please try again.");
+    } finally {
+      setLoading(false);
     }
-  };
 
-  return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h3>Welcome, {user.name}! Choose your role to continue</h3>
+    return (
+      <div className="profile-settings-container">
+        <h2>profile Settings</h2>
+        <p>
+          <strrong>Name:</strrong>
+          {user?.name}
+        </p>
 
-        {loading ? (
+        <label htmlFor="role">Current Role:</label>
+
+        {loadingRoles ? (
           <p>Loading roles...</p>
         ) : (
           <select
+            id="role"
             value={selectedRole}
             onChange={(e) => setSelectedRole(e.target.value)}
           >
-            <option value="">-- Select a role --</option>
-
+            <option value="">-- Select Role --</option>
             {rolesData.map((group, idx) => (
               <optgroup key={idx} label={group.category}>
                 {group.roles.map((role) => (
@@ -74,12 +79,12 @@ const RoleModal = ({ user, setUser, onClose, showToast }) => {
 
         {error && <p className="error-msg">{error}</p>}
 
-        <button className="save-btn" onClick={handleSave}>
-          Save & Continue
+        <button onClick={handleUpdate} disabled={loading || loadingRoles}>
+          {loading ? "Updating..." : "Update Role"}
         </button>
       </div>
-    </div>
-  );
+    );
+  };
 };
 
-export default RoleModal;
+export default ProfileSettings;

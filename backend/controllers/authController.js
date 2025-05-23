@@ -1,7 +1,6 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const generateDefaultSnippets = require("../utils/defaultSnippets");
 
 // REGISTER
 exports.register = async (req, res) => {
@@ -27,8 +26,6 @@ exports.register = async (req, res) => {
 
     await newUser.save();
 
-    await generateDefaultSnippets(newUser._id);
-
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
 
     res.status(201).json({
@@ -38,7 +35,7 @@ exports.register = async (req, res) => {
         id: newUser._id,
         username: newUser.username,
         email: newUser.email,
-        role: "",
+        role: newUser.role || "",
       },
     });
   } catch (err) {

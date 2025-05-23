@@ -20,6 +20,7 @@ import SharedSnippets from "./components/SharedSnippet";
 import ProtectedRoute from "./components/ProtectedRoute";
 import RoleModal from "./components/RoleModal";
 import Toast from "./components/Toast";
+import ProfileSettings from "./components/ProfileSettings";
 
 // 🔁 Inre komponent där useNavigate fungerar
 const AppContent = ({ user, setUser, toast, showToast }) => {
@@ -45,8 +46,20 @@ const AppContent = ({ user, setUser, toast, showToast }) => {
       )}
 
       <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="/register" element={<Register />} />
+        <Route
+          path="/"
+          element={
+            user ? (
+              <Navigate to="/dashboard" replace />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        <Route
+          path="/register"
+          element={user ? <Navigate to="/dashboard" replace /> : <Register />}
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
@@ -87,6 +100,18 @@ const AppContent = ({ user, setUser, toast, showToast }) => {
           element={
             <ProtectedRoute user={user}>
               <SharedSnippets />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute user={user}>
+              <ProfileSettings
+                user={user}
+                setUser={setUser}
+                showToast={showToast}
+              />
             </ProtectedRoute>
           }
         />

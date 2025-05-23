@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const rolesConfig = require("../config/rolesConfig");
 
 exports.getMe = async (req, res) => {
   try {
@@ -27,6 +28,9 @@ exports.updateMe = async (req, res) => {
       return res.status(400).json({ message: "Role is required" });
     }
 
+    const userBefore = await User.findById(req.user.id);
+    const hadNoRole = !userBefore.role;
+
     const user = await User.findByIdAndUpdate(
       req.user.id,
       { role },
@@ -35,6 +39,10 @@ exports.updateMe = async (req, res) => {
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
+    }
+
+    if (hadNoRole) {
+      await generateDefaultSnippets(user._id);
     }
 
     res.json({
@@ -49,4 +57,8 @@ exports.updateMe = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Failed to update user" });
   }
+};
+
+exports.getAvailableRoles = (req, res) => {
+  res.json(rolesConfig);
 };

@@ -21,13 +21,17 @@ const Login = () => {
 
     try {
       const res = await API.post("/auth/login", formData);
-      console.log(res.data);
+      const { token, user } = res.data;
 
       //Spara token och username i localStorage
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("username", res.data.user.username);
+      localStorage.setItem("token", token);
+      localStorage.setItem("username", user.username);
 
-      navigate("/dashboard");
+      if (user.role && user.role.trim().length > 0) {
+        navigate("/dashboard");
+      } else {
+        navigate("/");
+      }
     } catch (err) {
       setError(err.response?.data?.message || "Login error.");
     } finally {

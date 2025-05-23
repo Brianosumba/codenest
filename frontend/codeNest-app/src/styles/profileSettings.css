@@ -1,0 +1,32 @@
+.profile-settings-container {
+  max-width: 500px;
+  margin: 3rem auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-settings-container h2 {
+  margin-bottom: 1rem;
+}
+
+.profile-settings-container select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.profile-settings-container button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.profile-settings-container .error-msg {
+  color: red;
+  margin-top: 0.5rem;
+}
