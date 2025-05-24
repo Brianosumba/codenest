@@ -30,58 +30,67 @@ const ProfileSettings = ({ showToast }) => {
       setError("Please select a role");
       return;
     }
-    setError(""), setLoading(true);
+
+    setError("");
+    setLoading(true);
 
     try {
-      const res = await API.put("/users/me", { role: selectedRole });
-
+      const token = localStorage.getItem("token");
+      const res = await API.put(
+        "/users/me",
+        { role: selectedRole },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setUser(res.data.user);
-      showToast("Your rol was updated", "sucess");
+      showToast("Your role was updated", "success");
     } catch (err) {
       setError("Could not update role. Please try again.");
     } finally {
       setLoading(false);
     }
-
-    return (
-      <div className="profile-settings-container">
-        <h2>profile Settings</h2>
-        <p>
-          <strrong>Name:</strrong>
-          {user?.name}
-        </p>
-
-        <label htmlFor="role">Current Role:</label>
-
-        {loadingRoles ? (
-          <p>Loading roles...</p>
-        ) : (
-          <select
-            id="role"
-            value={selectedRole}
-            onChange={(e) => setSelectedRole(e.target.value)}
-          >
-            <option value="">-- Select Role --</option>
-            {rolesData.map((group, idx) => (
-              <optgroup key={idx} label={group.category}>
-                {group.roles.map((role) => (
-                  <option key={role} value={role}>
-                    {role}
-                  </option>
-                ))}
-              </optgroup>
-            ))}
-          </select>
-        )}
-
-        {error && <p className="error-msg">{error}</p>}
-
-        <button onClick={handleUpdate} disabled={loading || loadingRoles}>
-          {loading ? "Updating..." : "Update Role"}
-        </button>
-      </div>
-    );
   };
+
+  return (
+    <div className="profile-settings-container">
+      <h2>Profile Settings</h2>
+      <p>
+        <strong>Name:</strong> {user?.name}
+      </p>
+
+      <label htmlFor="role">Current Role:</label>
+
+      {loadingRoles ? (
+        <p>Loading roles...</p>
+      ) : (
+        <select
+          id="role"
+          value={selectedRole}
+          onChange={(e) => setSelectedRole(e.target.value)}
+        >
+          <option value="">-- Select Role --</option>
+          {rolesData.map((group, idx) => (
+            <optgroup key={idx} label={group.category}>
+              {group.roles.map((role) => (
+                <option key={role} value={role}>
+                  {role}
+                </option>
+              ))}
+            </optgroup>
+          ))}
+        </select>
+      )}
+
+      {error && <p className="error-msg">{error}</p>}
+
+      <button onClick={handleUpdate} disabled={loading || loadingRoles}>
+        {loading ? "Updating..." : "Update Role"}
+      </button>
+    </div>
+  );
 };
 
 export default ProfileSettings;
