@@ -109,13 +109,18 @@ app.listen(3000, () => {
 const generateDefaultSnippets = async (userId) => {
   const withUser = defaultSnippets.map((snippet) => ({
     ...snippet,
-    user: userId,
+    userId: userId,
     isFavorite: false,
     isShared: false,
     starter: true,
   }));
 
-  await Snippet.insertMany(withUser);
+  try {
+    await Snippet.insertMany(withUser);
+    console.log("Default snippets inserted for user:", userId);
+  } catch (err) {
+    console.error(" Failed to insert default snippets:", err);
+  }
 };
 
 module.exports = generateDefaultSnippets;

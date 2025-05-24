@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import "../styles/navbar.css";
 
-const Navbar = ({ user, setUser }) => {
+const Navbar = () => {
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const { user, setUser } = useAuth();
 
   const handleLogout = () => {
     localStorage.removeItem("token");

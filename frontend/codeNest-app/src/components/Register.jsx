@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../API/api";
 import "../styles/auth.css";
+import { useAuth } from "../context/AuthContext";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -31,12 +33,10 @@ const Register = () => {
         password: formData.password,
       });
 
-      const { token, user } = loginRes.data;
+      const { token } = loginRes.data;
 
-      localStorage.setItem("token", token);
-      localStorage.setItem("username", user.username);
+      await login(token);
 
-      alert("Registration successful! You can now log in.");
       navigate("/dashboard");
     } catch (err) {
       setError(err.response?.data?.message || "Registration error.");

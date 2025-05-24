@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const rolesConfig = require("../config/rolesConfig");
+const generateDefaultSnippets = require("../utils/defaultSnippets");
 
 exports.getMe = async (req, res) => {
   try {
@@ -28,21 +29,25 @@ exports.updateMe = async (req, res) => {
       return res.status(400).json({ message: "Role is required" });
     }
 
-    const userBefore = await User.findById(req.user.id);
-    const hadNoRole = !userBefore.role;
-
-    const user = await User.findByIdAndUpdate(
-      req.user.id,
-      { role },
-      { new: true, runValidators: true }
-    ).select("-password");
-
+    const user = await User.findById(req.user.id);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    if (hadNoRole) {
-      await generateDefaultSnippets(user._id);
+    const isFirstTimeChoosingRole = !user.role;
+
+    // Uppdatera roll och spara
+    user.role = role;
+    await user.save();
+
+    // Skapa starter-snippets endast om det är första gången
+    if (isFirstTimeChoosingRole) {
+      try {
+        await generateDefaultSnippets(user._id);
+        console.log(` Starter snippets created for ${user.username}`);
+      } catch (err) {
+        console.error(" Could not generate starter snippets:", err);
+      }
     }
 
     res.json({
@@ -55,6 +60,7 @@ exports.updateMe = async (req, res) => {
       },
     });
   } catch (error) {
+    console.error(" Error in updateMe:", error);
     res.status(500).json({ message: "Failed to update user" });
   }
 };

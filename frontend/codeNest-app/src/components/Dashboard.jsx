@@ -28,7 +28,7 @@ const Dashboard = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log("Snippet fetched:", res.data);
+        console.log("✅ Snippets fetched from API:", res.data);
         setSnippets(res.data);
       } catch (err) {
         console.error(err);
@@ -39,6 +39,10 @@ const Dashboard = () => {
     };
     fetchSnippets();
   }, []);
+
+  useEffect(() => {
+    console.log("Snippets fetched from API:", snippets);
+  }, [snippets]);
 
   const filteredSnippets = snippets.filter((snippet) => {
     const query = searchQuery.toLowerCase();

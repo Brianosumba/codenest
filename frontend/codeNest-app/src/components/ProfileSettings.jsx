@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import API from "../API/api";
 import "../styles/profileSettings.css";
+import { useAuth } from "../context/AuthContext";
 
-const ProfileSettings = ({ user, setUser, showToast }) => {
+const ProfileSettings = ({ showToast }) => {
+  const { user, setUser } = useAuth();
   const [selectedRole, setSelectedRole] = useState(user?.role || "");
   const [rolesData, setRolesData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -31,12 +33,7 @@ const ProfileSettings = ({ user, setUser, showToast }) => {
     setError(""), setLoading(true);
 
     try {
-      const token = localStorage.getItem("token");
-      const res = await API.put(
-        "/users/me",
-        { role: selectedRole },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const res = await API.put("/users/me", { role: selectedRole });
 
       setUser(res.data.user);
       showToast("Your rol was updated", "sucess");

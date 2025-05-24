@@ -7,6 +7,8 @@ import {
   useNavigate,
 } from "react-router-dom";
 
+import { useAuth } from "./context/AuthContext";
+
 import API from "./API/api";
 import Navbar from "./components/Navbar";
 import Register from "./components/Register";
@@ -23,23 +25,22 @@ import Toast from "./components/Toast";
 import ProfileSettings from "./components/ProfileSettings";
 
 // 🔁 Inre komponent där useNavigate fungerar
-const AppContent = ({ user, setUser, toast, showToast }) => {
+const AppContent = ({ toast, showToast }) => {
   const navigate = useNavigate();
+  const { user, needsRoleSetup } = useAuth();
 
   return (
     <>
-      <Navbar user={user} setUser={setUser} />
+      <Navbar user={user} />
       <Toast
         message={toast.message}
         visible={toast.visible}
         type={toast.type}
       />
 
-      {/* Visa modal om användaren inte har en roll */}
-      {user && !user.role && (
+      {/* Visa modal om användaren inte har valt roll */}
+      {user?.role === "" && (
         <RoleModal
-          user={user}
-          setUser={setUser}
           showToast={showToast}
           onClose={() => navigate("/dashboard")}
         />
@@ -60,7 +61,11 @@ const AppContent = ({ user, setUser, toast, showToast }) => {
           path="/register"
           element={user ? <Navigate to="/dashboard" replace /> : <Register />}
         />
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={user ? <Navigate to="/dashboard" replace /> : <Login />}
+        />
+
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
         <Route
@@ -107,11 +112,7 @@ const AppContent = ({ user, setUser, toast, showToast }) => {
           path="/profile"
           element={
             <ProtectedRoute user={user}>
-              <ProfileSettings
-                user={user}
-                setUser={setUser}
-                showToast={showToast}
-              />
+              <ProfileSettings showToast={showToast} />
             </ProtectedRoute>
           }
         />
@@ -120,10 +121,9 @@ const AppContent = ({ user, setUser, toast, showToast }) => {
   );
 };
 
-// 🧠 Yttre komponent: logik + Router
+//  Yttre komponent: bara auth och toast
 const App = () => {
-  const [user, setUser] = useState(null);
-  const [loadingUser, setLoadingUser] = useState(true);
+  const { user, loading, loadingUser } = useAuth();
 
   const [toast, setToast] = useState({
     message: "",
@@ -138,48 +138,10 @@ const App = () => {
     }, 3000);
   };
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        setLoadingUser(false);
-        return;
-      }
-
-      try {
-        const res = await API.get("/users/me", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        setUser(res.data);
-
-        if (res.data.role) {
-          showToast(`Welcome back, ${res.data.name}! 👋`, "success");
-        } else {
-          showToast(
-            `Welcome ${res.data.name}! Let's set up your profile`,
-            "info"
-          );
-        }
-      } catch (err) {
-        console.error("Failed to fetch user", err);
-      } finally {
-        setLoadingUser(false);
-      }
-    };
-
-    fetchUser();
-  }, []);
-
   return (
     <Router>
       {!loadingUser && (
-        <AppContent
-          user={user}
-          setUser={setUser}
-          toast={toast}
-          showToast={showToast}
-        />
+        <AppContent user={user} toast={toast} showToast={showToast} />
       )}
     </Router>
   );

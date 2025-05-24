@@ -43,6 +43,10 @@ const snippetSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    starter: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

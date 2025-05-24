@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import API from "../API/api";
+import { useAuth } from "../context/AuthContext";
 import "../styles/roleModal.css";
 
-const RoleModal = ({ user, setUser, onClose, showToast }) => {
+const RoleModal = ({ onClose, showToast }) => {
   const [selectedRole, setSelectedRole] = useState("");
   const [rolesData, setRolesData] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+
+  const { user, setUser, setNeedsRoleSetup } = useAuth();
 
   useEffect(() => {
     const fetchRoles = async () => {
@@ -35,10 +38,14 @@ const RoleModal = ({ user, setUser, onClose, showToast }) => {
         "/users/me",
         { role: selectedRole },
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
+
       setUser(res.data.user);
+      setNeedsRoleSetup(false);
       showToast("Role saved successfully", "success");
       onClose();
     } catch (err) {
