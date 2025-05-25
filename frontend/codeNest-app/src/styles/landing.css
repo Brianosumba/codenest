@@ -157,6 +157,14 @@
 .tag.node {
   background-color: #3c873a;
 }
+.tag.grid {
+  background-color: #0d9488;
+  color: #fff;
+}
+.tag.layout {
+  background-color: #14b8a6;
+  color: #fff;
+}
 
 /* Laravel / PHP Ecosystem */
 .tag.laravel {
@@ -213,7 +221,7 @@
   background-color: #4b5563;
 }
 
-/*Express*/
+/* Python */
 .tag.express {
   background-color: #000000;
   color: #fff;
@@ -228,16 +236,6 @@
 .tag.category {
   background-color: #9ca3af;
   color: #370707;
-}
-
-.tag-title {
-  font-size: 0.85rem;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-  color: var(--text-color);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  opacity: 0.8;
 }
 
 /* === View More Button === */
