@@ -179,9 +179,11 @@ exports.shareSnippet = async (req, res) => {
 // GET SHARED SNIPPETS
 exports.getSharedSnippets = async (req, res) => {
   try {
-    const sharedSnippets = await Snippet.find({ isShared: true }).sort({
-      createdAt: -1,
-    });
+    const sharedSnippets = await Snippet.find({ isShared: true })
+      .sort({
+        createdAt: -1,
+      })
+      .populate("userId", "username role");
     res.json(sharedSnippets);
   } catch (err) {
     console.error("Error in getSharedSnippets:", err);

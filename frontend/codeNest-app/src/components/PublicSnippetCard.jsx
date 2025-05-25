@@ -73,6 +73,28 @@ const PublicSnippetCard = ({ snippet }) => {
         <strong>Tags:</strong> {snippet.tags.join(", ")}
       </p>
 
+      {snippet.userId && (
+        <div className="shared-by">
+          <p>
+            👤 Shared by <strong>{snippet.userId.username}</strong>
+            {snippet.userId.role && (
+              <>
+                {" "}
+                – <em>{snippet.userId.role}</em>
+              </>
+            )}
+          </p>
+        </div>
+      )}
+      <p>
+        🗓️ Shared on{" "}
+        {new Date(snippet.createdAt).toLocaleDateString("en-GB", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        })}
+      </p>
+
       <h4>Code:</h4>
       <SyntaxHighlighter
         language={snippet.language.toLowerCase() || "javascript"}
