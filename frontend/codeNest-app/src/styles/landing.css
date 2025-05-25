@@ -1,0 +1,307 @@
+/* === Page === */
+.landing-page {
+  background-color: transparent;
+  color: var(--text-color);
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  font-family: var(--font-main);
+}
+
+/* === Hero Section === */
+.hero-section {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  margin-bottom: 0.25rem;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: var(--text-color);
+  opacity: 0.85;
+  max-width: 640px;
+  margin: 0 auto 2rem;
+}
+
+/* === Buttons === */
+.auth-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.auth-buttons button {
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.auth-buttons button:hover {
+  background-color: var(--hover-color);
+  transform: scale(1.03);
+}
+
+/* === Snippet Cards Section === */
+.snippet-preview-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+  padding-bottom: 4rem;
+}
+
+/* === Individual Snippet Card === */
+.snippet-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.snippet-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.snippet-card h3 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.snippet-card p {
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* === Description === */
+.snippet-description {
+  margin-top: 0.5rem;
+  font-style: italic;
+  opacity: 0.85;
+}
+
+/* === Code Box === */
+.snippet-code {
+  margin-top: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: "Fira Code", monospace;
+  background-color: #1e1e1e;
+  color: #dcdcdc;
+  padding: 1rem;
+  font-size: 0.9rem;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.25);
+}
+
+/* === Tags === */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.75rem 0 0.5rem;
+}
+
+.tag {
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* === Color Themes by Tag (extended from your snippets) === */
+
+/* Core Languages */
+.tag.html {
+  background-color: #e34c26;
+}
+.tag.css {
+  background-color: #264de4;
+}
+.tag.javascript {
+  background-color: #f0db4f;
+  color: #000;
+}
+.tag.typescript {
+  background-color: #3178c6;
+  color: #fff;
+}
+.tag.python {
+  background-color: #3572a5;
+}
+.tag.php {
+  background-color: #8993be;
+}
+.tag.react {
+  background-color: #61dafb;
+  color: #000;
+}
+.tag.node {
+  background-color: #3c873a;
+}
+
+/* Laravel / PHP Ecosystem */
+.tag.laravel {
+  background-color: #f9322c;
+}
+.tag.routes,
+.tag.route {
+  background-color: #6d28d9;
+}
+.tag.controller {
+  background-color: #8b5cf6;
+}
+.tag.mvc {
+  background-color: #5b21b6;
+}
+
+/* JavaScript Concepts */
+.tag.arrays,
+.tag.map,
+.tag.filter {
+  background-color: #f59e0b;
+}
+
+.tag.hooks,
+.tag.useeffect {
+  background-color: #10b981;
+}
+
+.tag.middleware {
+  background-color: #7c3aed;
+}
+
+/* HTML Concepts */
+.tag.ul,
+.tag.ol,
+.tag.list,
+.tag.structure {
+  background-color: #6b7280;
+}
+
+/* TypeScript */
+.tag.interfaces,
+.tag.annotation,
+.tag.safety,
+.tag.types {
+  background-color: #1e40af;
+}
+
+/* Python */
+.tag.function,
+.tag.if,
+.tag.print,
+.tag.syntax {
+  background-color: #4b5563;
+}
+
+/*Express*/
+.tag.express {
+  background-color: #000000;
+  color: #fff;
+}
+
+/* Misc fallback */
+.tag.markup,
+.tag.styling,
+.tag.logic,
+.tag.backend,
+.tag.frontend,
+.tag.category {
+  background-color: #9ca3af;
+  color: #370707;
+}
+
+.tag-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: var(--text-color);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.8;
+}
+
+/* === View More Button === */
+.snippet-card button {
+  align-self: flex-start;
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.snippet-card button:hover {
+  background-color: var(--hover-color);
+}
+
+/* === No Snippets === */
+.no-snippets {
+  text-align: center;
+  background-color: var(--card-bg);
+  padding: 2.5rem;
+  border-radius: 12px;
+  color: var(--text-color);
+  font-size: 1.2rem;
+}
+
+.no-snippets button {
+  margin-top: 1.5rem;
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 0.6rem 1.4rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.no-snippets button:hover {
+  background-color: var(--hover-color);
+}
+
+/* === Responsive Fixes === */
+@media (max-width: 600px) {
+  .hero-title {
+    font-size: 2.25rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+  }
+
+  .snippet-code {
+    font-size: 0.8rem;
+  }
+
+  .snippet-card h3 {
+    font-size: 1.15rem;
+  }
+
+  .auth-buttons button {
+    width: 100%;
+  }
+}

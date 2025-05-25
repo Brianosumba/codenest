@@ -147,6 +147,52 @@ const evens = numbers.filter(num => num % 2 === 0);
 console.log(evens); // [2, 4]`,
     starter: true,
   },
+  {
+    title: "TypeScript Basics: Types & Interfaces",
+    language: "TypeScript",
+    type: "frontend",
+    category: "TypeScript",
+    tags: ["typescript", "types", "interfaces", "safety", "annotation"],
+    description: `## What You'll Learn
+How to define types and interfaces in TypeScript for safer and clearer code.
+
+---
+
+## Code Explanation
+
+### \`let age: number = 25;\`
+Explicitly declares that \`age\` is a number.
+
+### \`interface Person\`
+Creates a contract for what a Person object should look like.
+
+### \`function greet(person: Person)\`
+Uses the Person type as a parameter – the function only accepts a matching object.
+
+---
+
+## Analogy
+
+TypeScript is like using **labels on boxes**. You know exactly what's inside and avoid surprises later.`,
+    code: `interface Person {
+  name: string;
+  age: number;
+}
+
+let age: number = 25;
+
+function greet(person: Person): void {
+  console.log(\`Hello, \${person.name}!\`);
+}
+
+const user: Person = {
+  name: "Ninna",
+  age: age,
+};
+
+greet(user);`,
+    starter: true,
+  },
 
   {
     title: "React useEffect Hook",
@@ -249,6 +295,89 @@ app.get("/", (req, res) => {
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });`,
+    starter: true,
+  },
+  {
+    title: "Laravel Basics: Route & Controller",
+    language: "PHP",
+    type: "backend",
+    category: "Laravel",
+    tags: ["laravel", "php", "routes", "controller", "mvc"],
+    description: `## What You'll Learn
+How to define a route in Laravel and connect it to a controller method.
+
+---
+
+## Code Explanation
+
+### \`Route::get('/welcome', ...)\`
+Creates a GET route in Laravel that listens on \`/welcome\`.
+
+### \`[WelcomeController::class, 'index']\`
+Tells Laravel to call the \`index\` method inside the \`WelcomeController\`.
+
+### \`php artisan make:controller WelcomeController\`
+Command to generate a new controller.
+
+---
+
+## Analogy
+
+Think of a route like **a receptionist** it receives incoming visitors (requests) and sends them to the right office (controller).`,
+    code: `// web.php (routes file)
+use App\\Http\\Controllers\\WelcomeController;
+
+Route::get('/welcome', [WelcomeController::class, 'index']);
+
+// WelcomeController.php
+namespace App\\Http\\Controllers;
+
+use Illuminate\\Http\\Request; 
+
+class WelcomeController extends Controller
+{
+    public function index()
+    {
+        return response()->json(['message' => 'Welcome to Laravel!']);
+    }
+}`,
+    starter: true,
+  },
+  {
+    title: "Python Basics: Functions & Conditions",
+    language: "Python",
+    type: "backend",
+    category: "Python",
+    tags: ["python", "function", "if", "print", "syntax"],
+    description: `## What You'll Learn
+Basic Python syntax: how to define a function and use an \`if\` statement.
+
+---
+
+## Code Explanation
+
+### \`def greet(name):\`
+Defines a function named \`greet\` with one parameter.
+
+### \`if name:\`
+Checks if a name was passed in (non-empty string).
+
+### \`print(...)\`
+Outputs text to the terminal.
+
+---
+
+## Analogy
+
+Think of a Python function like a **coffee machine** – you put something in (a name), it processes, and gives you something out (a greeting).`,
+    code: `def greet(name):
+    if name:
+        print(f"Hello, {name}!")
+    else:
+        print("Hello, stranger!")
+
+greet("Ninna")
+greet("")`,
     starter: true,
   },
 ];

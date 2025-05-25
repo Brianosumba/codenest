@@ -10,6 +10,7 @@ import {
 import { useAuth } from "./context/AuthContext";
 
 import API from "./API/api";
+import Landing from "./components/Landing";
 import Navbar from "./components/Navbar";
 import Register from "./components/Register";
 import Login from "./components/Login";
@@ -49,13 +50,7 @@ const AppContent = ({ toast, showToast }) => {
       <Routes>
         <Route
           path="/"
-          element={
-            user ? (
-              <Navigate to="/dashboard" replace />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
+          element={user ? <Navigate to="/dashboard" replace /> : <Landing />}
         />
         <Route
           path="/register"

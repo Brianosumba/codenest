@@ -190,3 +190,17 @@ exports.getSharedSnippets = async (req, res) => {
     res.status(500).json({ message: "Failed to load shared snippets" });
   }
 };
+
+// Get starter snippets (used for landing page)
+exports.getStarterSnippets = async (req, res) => {
+  try {
+    const starterSnippets = await Snippet.find({ starter: true })
+      .sort({ createdAt: -1 })
+      .limit(10); //Anpassa efter behov
+
+    res.status(200).json(starterSnippets);
+  } catch (err) {
+    console.error("Error in getStarterSnippets:", err);
+    res.status(500).json({ message: "Failed to load starter snippets" });
+  }
+};

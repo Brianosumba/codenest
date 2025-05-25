@@ -9,8 +9,12 @@ const {
   deleteSnippet,
   shareSnippet,
   getSharedSnippets,
+  getStarterSnippets,
 } = require("../controllers/snippetController");
 const verifyToken = require("../middleware/verifyToken");
+
+//Starter snippets
+router.get("/starter", getStarterSnippets);
 
 //Get Shared Snippets
 router.get("/shared", getSharedSnippets);

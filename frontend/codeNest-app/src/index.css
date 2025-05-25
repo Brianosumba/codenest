@@ -1,12 +1,41 @@
-/* ========== Global Body Background for CodeNest ========== */
+:root {
+  /* === Neutral Base Colors === */
+  --primary-color: #111111; /* Mörk text och titlar */
+  --hover-color: #333333; /* Hovringsfärg */
+  --text-color: #111111; /* Allmän textfärg */
+  --bg-color: #ffffff; /* Vit bakgrund */
+
+  /* === Cards & Panels === */
+  --card-bg: #f8f8f8; /* Ljusgrå kortbakgrund */
+  --border-color: #dddddd; /* Grå kantlinjer */
+
+  /* === Buttons === */
+  --button-radius: 8px;
+
+  /* === Tag Defaults === */
+  --tag-bg: #222222;
+  --tag-text: #ffffff;
+
+  /* === Fonts === */
+  --font-main: "Poppins", "Inter", sans-serif;
+  --font-mono: "Fira Code", monospace;
+
+  /* === Shadows === */
+  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* ========== Global Body Background for CodeNest (Neutral + Visual Flair) ========== */
 body {
   margin: 0;
   padding: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-main);
   min-height: 100vh;
-  background: url("https://www.transparenttextures.com/patterns/cubes.png"),
-    /* 🔥 Bättre pattern */ linear-gradient(to right, #f7f9fc, #e0f2ff);
-  background-repeat: repeat;
-  background-size: auto, cover; /* Skillnad här! */
+  background-image: url("https://www.transparenttextures.com/patterns/cubes.png"),
+    linear-gradient(to right top, #ffffff, #eeeeee); /* ljus men neutral gradient */
+  background-repeat: repeat, no-repeat;
+  background-size: auto, cover;
   background-attachment: fixed;
+  color: var(--text-color);
+  line-height: 1.6;
 }
