@@ -252,6 +252,36 @@
   transition: background-color 0.3s ease;
 }
 
+/* === Title === */
+.snippet-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #111827; /* Mörkare för bättre kontrast */
+  margin-bottom: 0.5rem;
+}
+
+/* === Meta Container === */
+.snippet-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+}
+
+/* === Meta Labels (Language, Category – tydligare) === */
+.snippet-label {
+  font-size: 0.95rem;
+  color: #374151; /* Tydligare mörkgrå */
+  font-weight: 600; /* Lite bold men inte för mycket */
+}
+
+/* === Meta Values (ex: Python – mildare) === */
+.snippet-value {
+  font-weight: 400;
+  font-size: 0.95rem;
+  color: #6b7280; /* Mild grå för lugnare uttryck */
+}
+
 .snippet-card button:hover {
   background-color: var(--hover-color);
 }

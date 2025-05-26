@@ -129,13 +129,18 @@ const Landing = () => {
         {snippets.length > 0 ? (
           snippets.slice(0, 8).map((snippet) => (
             <div key={snippet._id} className="snippet-card">
-              <h3>{snippet.title}</h3>
-              <p>
-                <strong>Language:</strong> {snippet.language}
-              </p>
-              <p>
-                <strong>Category:</strong> {snippet.category}
-              </p>
+              <h3 className="snippet-title">{snippet.title}</h3>
+
+              <div className="snippet-meta">
+                <div>
+                  <span className="snippet-label">Language:</span>{" "}
+                  <span className="snippet-value">{snippet.language}</span>
+                </div>
+                <div>
+                  <span className="snippet-label">Category:</span>{" "}
+                  <span className="snippet-value">{snippet.category}</span>
+                </div>
+              </div>
 
               <div className="tags">
                 {snippet.tags.map((tag, i) => (
@@ -163,7 +168,11 @@ const Landing = () => {
                 />
               </div>
               <div className="snippet-description">
-                <ReactMarkdown components={markdownComponents}>
+                <ReactMarkdown
+                  components={markdownComponents}
+                  disallowedElements={["p"]}
+                  unwrapDisallowed={true}
+                >
                   {getMarkdownPreview(snippet.description)}
                 </ReactMarkdown>
               </div>

@@ -7,32 +7,32 @@ const defaultSnippets = [
     type: "frontend",
     category: "Markup",
     tags: ["html", "ul", "ol", "list", "structure"],
-    description: `## What You'll Learn
+    description: `## Snippet Overview
 How to create lists in HTML — both **unordered** (bulleted) and **ordered** (numbered) lists.
 
 ---
 
 ## Code Explanation
 
-### \`<!DOCTYPE html>\`
+#### \`<!DOCTYPE html>\`
 Tells the browser this is an HTML5 document.
 
-### \`<html>\`
+#### \`<html>\`
 Wraps the entire page content.
 
-### \`<head>\`
+#### \`<head>\`
 Holds metadata, including the page title.
 
-### \`<title>\`
+#### \`<title>\`
 The text shown in the browser tab.
 
-### \`<body>\`
+#### \`<body>\`
 What the user sees — the actual page content.
 
-### \`<ul>\`
+#### \`<ul>\`
 Unordered list. Each \`<li>\` is a bullet point.
 
-### \`<ol>\`
+#### \`<ol>\`
 Ordered list. Items are shown in numbered order.
 
 ---
@@ -72,20 +72,20 @@ Think of:
     type: "frontend",
     category: "Styling",
     tags: ["css", "grid", "layout"],
-    description: `## What You'll Learn
+    description: `## Snippet Overview
 How to use CSS Grid to build responsive layouts with rows and columns.
 
 ---
 
 ## Code Explanation
 
-### \`.grid-container\`
+#### \`.grid-container\`
 - \`display: grid\` turns on grid mode
 - \`grid-template-columns: repeat(3, 1fr)\` makes 3 equal columns
 - \`gap\` adds spacing between grid cells
 - \`padding\` adds space around the container
 
-### \`.grid-item\`
+#### \`.grid-item\`
 - Background, text color, padding, rounded corners
 - These are the boxes in your grid
 
@@ -117,17 +117,17 @@ Grid is like a **chess board** — each square is a cell where you can place con
     type: "frontend",
     category: "Logic",
     tags: ["javascript", "arrays", "map", "filter"],
-    description: `## What You'll Learn
+    description: `## Snippet Overview
 How to use two powerful array methods: \`map()\` and \`filter()\`.
 
 ---
 
 ## Code Explanation
 
-### \`map()\`
+#### \`map()\`
 Creates a **new array** by transforming each element.
 
-### \`filter()\`
+#### \`filter()\`
 Creates a **new array** by selecting certain elements based on a condition.
 
 ---
@@ -153,20 +153,20 @@ console.log(evens); // [2, 4]`,
     type: "frontend",
     category: "TypeScript",
     tags: ["typescript", "types", "interfaces", "safety", "annotation"],
-    description: `## What You'll Learn
+    description: `## Snippet Overview
 How to define types and interfaces in TypeScript for safer and clearer code.
 
 ---
 
 ## Code Explanation
 
-### \`let age: number = 25;\`
+#### \`let age: number = 25;\`
 Explicitly declares that \`age\` is a number.
 
 ### \`interface Person\`
 Creates a contract for what a Person object should look like.
 
-### \`function greet(person: Person)\`
+#### \`function greet(person: Person)\`
 Uses the Person type as a parameter – the function only accepts a matching object.
 
 ---
@@ -200,20 +200,20 @@ greet(user);`,
     type: "frontend",
     category: "React",
     tags: ["react", "hooks", "useEffect"],
-    description: `## What You'll Learn
+    description: `## Snippet Overview
 How to use the \`useEffect\` hook to run logic when a component loads.
 
 ---
 
 ## Code Explanation
 
-### \`useEffect(() => {}, [])\`
+#### \`useEffect(() => {}, [])\`
 Runs **once** when the component mounts (like \`componentDidMount()\`).
 
-### \`setInterval()\`
+#### \`setInterval()\`
 Increases the timer every second.
 
-### \`clearInterval()\`
+#### \`clearInterval()\`
 Cleans up the interval when the component unmounts.
 
 ---
@@ -248,29 +248,29 @@ export default Timer;`,
     type: "backend",
     category: "Node.js",
     tags: ["express", "middleware", "routes"],
-    description: `## What You'll Learn
+    description: `## Snippet Overview
 How to create a basic Express server, use middleware, and handle routes.
 
 ---
 
 ## Code Explanation
 
-### \`const express = require("express");\`
+#### \`const express = require("express");\`
 Loads Express — a popular Node.js web framework.
 
-### \`const app = express();\`
+#### \`const app = express();\`
 Initializes the app. Think of this as starting your server engine.
 
-### \`app.use()\`
+#### \`app.use()\`
 Middleware: runs on **every** request. Here it logs info.
 
-### \`app.get("/", ...)\`
+#### \`app.get("/", ...)\`
 Defines a route for the home URL (\`/\`).
 
-### \`res.send()\`
+#### \`res.send()\`
 Sends a response back to the client (e.g., the browser).
 
-### \`app.listen()\`
+#### \`app.listen()\`
 Starts the server and listens on port 3000.
 
 ---
@@ -303,20 +303,20 @@ app.listen(3000, () => {
     type: "backend",
     category: "Laravel",
     tags: ["laravel", "php", "routes", "controller", "mvc"],
-    description: `## What You'll Learn
+    description: `## Snippet Overview
 How to define a route in Laravel and connect it to a controller method.
 
 ---
 
 ## Code Explanation
 
-### \`Route::get('/welcome', ...)\`
+####\`Route::get('/welcome', ...)\`
 Creates a GET route in Laravel that listens on \`/welcome\`.
 
-### \`[WelcomeController::class, 'index']\`
+####\`[WelcomeController::class, 'index']\`
 Tells Laravel to call the \`index\` method inside the \`WelcomeController\`.
 
-### \`php artisan make:controller WelcomeController\`
+####\`php artisan make:controller WelcomeController\`
 Command to generate a new controller.
 
 ---
@@ -349,25 +349,25 @@ class WelcomeController extends Controller
     type: "backend",
     category: "Python",
     tags: ["python", "function", "if", "print", "syntax"],
-    description: `## What You'll Learn
+    description: `## Snippet Overview
 Basic Python syntax: how to define a function and use an \`if\` statement.
 
 ---
 
 ## Code Explanation
 
-### \`def greet(name):\`
+#### \`def greet(name):\`
 Defines a function named \`greet\` with one parameter.
 
-### \`if name:\`
+#### \`if name:\`
 Checks if a name was passed in (non-empty string).
 
-### \`print(...)\`
+#### \`print(...)\`
 Outputs text to the terminal.
 
 ---
 
-## Analogy
+##Analogy
 
 Think of a Python function like a **coffee machine** – you put something in (a name), it processes, and gives you something out (a greeting).`,
     code: `def greet(name):
