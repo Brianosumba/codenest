@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "../styles/dashboard.css";
 import { useNavigate, Link } from "react-router-dom";
 import API from "../API/api";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -114,34 +117,50 @@ const Dashboard = () => {
         ) : filteredSnippets.length === 0 ? (
           <p>No snippets matched your search.</p>
         ) : (
-          <ul>
+          <div className="snippet-grid">
             {filteredSnippets.map((snippet) => (
-              <li key={snippet._id}>
-                <Link to={`/snippet/${snippet._id}`}>
-                  <strong>{snippet.title}</strong>
-                  {snippet.starter && (
-                    <span className="starter-badge" title="Starter snippet">
-                      Starter Snippets
+              <div key={snippet._id} className="snippet-card">
+                <div className="snippet-header">
+                  <h3 className="snippet-title">{snippet.title}</h3>
+                  <div className="snippet-subtitle">
+                    <span>Language: {snippet.language}</span>
+                    <span>Category: {snippet.category}</span>
+                  </div>
+                </div>
+
+                <div className="snippet-tags">
+                  {snippet.tags.map((tag) => (
+                    <span key={tag} className={`tag ${tag.toLowerCase()}`}>
+                      {tag}
                     </span>
+                  ))}
+                </div>
+
+                <div className="snippet-code-preview">
+                  <SyntaxHighlighter
+                    language={snippet.language.toLowerCase()}
+                    style={vscDarkPlus}
+                    customStyle={{ background: "none", padding: 0 }}
+                    wrapLines={true}
+                    showLineNumbers={false}
+                  >
+                    {snippet.code.split("\n").slice(0, 10).join("\n")}
+                  </SyntaxHighlighter>
+                </div>
+
+                <div className="snippet-actions">
+                  <Link to={`/snippet/${snippet._id}`} className="view-link">
+                    View Snippet
+                  </Link>
+                  {snippet.isFavorite ? (
+                    <AiFillStar color="gold" title="Favorite" />
+                  ) : (
+                    <AiOutlineStar color="#ccc" title="Not Favorite" />
                   )}
-                  ({snippet.language})
-                </Link>
-                {snippet.isFavorite ? (
-                  <AiFillStar
-                    color="gold"
-                    title="Favorite"
-                    style={{ marginLeft: 8 }}
-                  />
-                ) : (
-                  <AiOutlineStar
-                    color="#ccc"
-                    title="Not Favorite"
-                    style={{ marginLeft: 8 }}
-                  />
-                )}
-              </li>
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
         )}
       </div>
 

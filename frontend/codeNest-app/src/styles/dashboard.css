@@ -1,137 +1,315 @@
-/* ========== Dashboard Layout  ========== */
-
+/* === Dashboard Container === */
 .dashboard-container {
-  padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
-  font-family: "Poppins", sans-serif;
+  padding: 2rem 1rem;
+  font-family: var(--font-main);
+  color: var(--text-color);
 }
 
+/* === Welcome Card === */
 .welcome-card {
-  background: #ffffffcc; /* halvtransparent vit */
+  background-color: var(--card-bg);
   padding: 2rem;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-card);
   text-align: center;
   margin-bottom: 2rem;
 }
 
 .welcome-card h1 {
   font-size: 2.5rem;
-  color: #333;
+  font-weight: 800;
+  color: var(--primary-color);
   margin-bottom: 0.5rem;
 }
 
 .welcome-card p {
-  color: #666;
-  font-size: 1.2rem;
+  color: var(--text-color);
+  opacity: 0.8;
+  font-size: 1.1rem;
 }
 
-.summary-cards {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.card {
-  background-color: #ffffffcc;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  flex: 1 1 250px;
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-}
-
-.card h2 {
-  margin-bottom: 0.5rem;
-  color: #007bff;
-}
-
-.card p {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #333;
-}
+/* === Search & Filters === */
 .search-filter-container {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
   gap: 1rem;
-  margin: 1rem 0;
+  margin-bottom: 1rem;
 }
 
 .search-filter-container input,
 .search-filter-container select {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
   font-size: 1rem;
   flex: 1;
+  background: var(--input-bg);
+  color: var(--text-color);
 }
 
-.recent-snippets {
-  margin-bottom: 2rem;
+/* === Snippet Grid === */
+.snippet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
 }
 
-.recent-snippets h2 {
+/* === Snippet Card === */
+.snippet-card {
+  background-color: var(--card-bg);
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.snippet-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* === Snippet Header === */
+.snippet-header {
   margin-bottom: 1rem;
-  color: #007bff;
 }
 
-.recent-snippets ul {
-  list-style: none;
-  padding: 0;
+.snippet-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 0.25rem;
 }
 
-.recent-snippets li {
-  background: #ffffffcc;
-  margin-bottom: 10px;
+.snippet-subtitle {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-color);
+  opacity: 0.8;
+  margin-bottom: 0.5rem;
+}
+
+.snippet-subtitle span {
+  font-weight: 600;
+}
+
+/* === Snippet Code Preview === */
+.snippet-code-preview {
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  font-family: "Fira Code", monospace;
+  font-size: 0.9rem;
   padding: 1rem;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: auto;
+  max-height: 200px;
+  margin-bottom: 1rem;
 }
 
+/* === Custom Scrollbar Styling for Code Preview (Dashboard) === */
+.snippet-code-preview::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.snippet-code-preview::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.snippet-code-preview::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+.snippet-code-preview:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Firefox Scrollbar */
+.snippet-code-preview {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+/* === Hide on mobile === */
+@media (max-width: 600px) {
+  .snippet-code-preview::-webkit-scrollbar {
+    display: none;
+  }
+
+  .snippet-code-preview {
+    scrollbar-width: none;
+  }
+}
+
+.language-tag {
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+.snippet-category {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  opacity: 0.85;
+  margin: 0.25rem 0 0.5rem;
+}
+
+/* === Tags === */
+.snippet-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.tag {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #fff;
+}
+
+/* Tag colors (reuse from landing) */
+.tag.html {
+  background-color: #e34c26;
+}
+.tag.css {
+  background-color: #264de4;
+}
+.tag.javascript {
+  background-color: #f0db4f;
+  color: #000;
+}
+.tag.typescript {
+  background-color: #3178c6;
+}
+.tag.python {
+  background-color: #3572a5;
+}
+.tag.php {
+  background-color: #8993be;
+}
+.tag.react {
+  background-color: #61dafb;
+  color: #000;
+}
+.tag.node {
+  background-color: #3c873a;
+}
+.tag.laravel {
+  background-color: #f9322c;
+}
+.tag.routes,
+.tag.route {
+  background-color: #6d28d9;
+}
+.tag.controller {
+  background-color: #8b5cf6;
+}
+.tag.mvc {
+  background-color: #5b21b6;
+}
+.tag.hooks,
+.tag.useeffect {
+  background-color: #10b981;
+}
+.tag.arrays,
+.tag.map,
+.tag.filter {
+  background-color: #f59e0b;
+  color: #000;
+}
+.tag.function,
+.tag.if,
+.tag.print,
+.tag.syntax {
+  background-color: #4b5563;
+}
+.tag.grid {
+  background-color: #0d9488;
+}
+.tag.layout {
+  background-color: #14b8a6;
+}
+.tag.express {
+  background-color: #000000;
+}
+
+/* === Snippet Actions === */
+.snippet-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.view-link {
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.view-link:hover {
+  background-color: var(--hover-color);
+}
+
+.star-icon {
+  font-size: 1.2rem;
+  margin-left: 0.5rem;
+}
+
+/* === Create New Button === */
 .cta-snippet {
   text-align: center;
+  margin: 3rem 0 1rem;
 }
 
 .cta-snippet button {
-  padding: 1rem 2.5rem;
-  background: linear-gradient(to right, #007bff, #0056b3);
-  color: white;
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
   border: none;
-  font-size: 1.2rem;
-  font-weight: bold;
-  border-radius: 12px;
+  border-radius: 10px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
 .cta-snippet button:hover {
-  background: linear-gradient(to right, #0056b3, #003f7f);
-  transform: scale(1.05);
+  background-color: var(--hover-color);
 }
 
-.dashboard-actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 1rem;
+/* === Public Snippets Button === */
+.dashboard-action {
+  text-align: center;
+  margin-top: 1rem;
 }
 
 .public-snippets-btn {
   background-color: #4f46e5;
   color: #fff;
-  padding: 0.6rem 1.2rem;
-  font-size: 1rem;
-  border: none;
+  padding: 0.6rem 1.4rem;
   border-radius: 8px;
+  border: none;
+  font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
@@ -140,6 +318,7 @@
   background-color: #4338ca;
 }
 
+/* === Starter Badge === */
 .starter-badge {
   background-color: #fde68a;
   color: #111;
@@ -151,14 +330,24 @@
   display: inline-block;
 }
 
-/* RESPONSIVE DASHBOARD */
+/* === Responsive === */
 @media (max-width: 768px) {
-  .summary-cards {
+  .search-filter-container {
     flex-direction: column;
-    align-items: center;
   }
 
-  .dashboard-container {
-    padding: 1rem;
+  .snippet-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-snippet button,
+  .public-snippets-btn {
+    width: 100%;
+  }
+
+  .snippet-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
   }
 }
