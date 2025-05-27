@@ -38,6 +38,7 @@ const snippetSchema = new mongoose.Schema(
       enum: ["frontend", "backend", "framework"],
       required: true,
     },
+
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
