@@ -65,11 +65,14 @@ const FolderModal = ({
         />
         <label>
           Color:
-          <input
-            type="color"
-            value={color}
-            onChange={(e) => setColor(e.target.value)}
-          />
+          <div className="color-input-group">
+            <input
+              type="color"
+              value={color}
+              onChange={(e) => setColor(e.target.value)}
+            />
+            <span className="color-preview">{color.toUpperCase()}</span>
+          </div>
         </label>
 
         <div className="modal-actions">

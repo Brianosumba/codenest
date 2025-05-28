@@ -1,48 +1,208 @@
+/* === Ultra-modern Folder Manager Styling === */
+:root {
+  --primary-color: #6366f1;
+  --accent-color: #8b5cf6;
+  --neutral-icon-color: #4b5563;
+  --bg-color: #f9fafb;
+  --card-bg: #ffffff;
+  --hover-bg: #f3f4f6;
+  --text-color: #111827;
+  --subtext-color: #6b7280;
+  --border-color: #e5e7eb;
+  --border-radius: 14px;
+  --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  --transition: all 0.25s ease;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
 .folder-section {
   margin-top: 2rem;
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  background: var(--card-bg);
+  box-shadow: var(--box-shadow);
 }
 
 .folder-title {
-  font-size: 1.5rem;
+  font-size: 1.875rem;
   font-weight: 700;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   color: var(--primary-color);
 }
 
 .folder-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
 }
 
 .folder-card {
-  background-color: #e5e7eb;
-  border-radius: 10px;
-  padding: 1rem;
-  text-align: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease;
-  cursor: pointer;
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--box-shadow);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: var(--transition);
+  border: 1px solid transparent;
 }
 
 .folder-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
+  border-color: var(--border-color);
+  background: var(--hover-bg);
 }
 
 .folder-icon-wrapper {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+.folder-icon-wrapper svg {
+  color: #374151; /* neutral dark gray */
+  width: 28px;
+  height: 28px;
+}
+
 .folder-name {
+  font-size: 1rem;
   font-weight: 600;
-  color: #111827;
-  font-size: 0.95rem;
+  text-align: center;
+  color: var(--text-color);
+  word-break: break-word;
+}
+
+.folder-menu {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  color: #6b7280; /* gray-500 */
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.folder-menu:hover {
+  color: var(--accent-color); /* retain hover color pop */
 }
 
 .create-folder {
-  border: 2px dashed #4f46e5;
-  background-color: #f9fafb;
+  border: 2px dashed var(--primary-color);
+  background: #fefeff;
+  justify-content: center;
+  transition: background 0.25s ease, border-color 0.25s;
+}
+
+.create-folder:hover {
+  background: #eef2ff;
+  border-color: var(--accent-color);
+}
+
+.create-folder .folder-icon-wrapper {
+  background: transparent;
+  color: var(--primary-color);
+  box-shadow: none;
 }
 
 .create-folder .folder-name {
-  color: #4f46e5;
+  color: var(--primary-color);
+}
+
+@media (max-width: 1200px) {
+  .folder-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  .folder-card {
+    padding: 1.25rem;
+  }
+
+  .folder-icon-wrapper svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .folder-name {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .folder-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .folder-section {
+    padding: 1.5rem;
+  }
+
+  .folder-title {
+    font-size: 1.6rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .folder-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+
+  .folder-card {
+    padding: 1rem;
+  }
+
+  .folder-title {
+    font-size: 1.4rem;
+  }
+
+  .folder-icon-wrapper svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .folder-name {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .folder-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .folder-section {
+    padding: 1rem;
+  }
+
+  .folder-card {
+    padding: 0.85rem;
+  }
+
+  .folder-title {
+    font-size: 1.25rem;
+  }
+
+  .folder-icon-wrapper svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .folder-name {
+    font-size: 0.875rem;
+  }
+
+  .folder-menu {
+    top: 10px;
+    right: 10px;
+  }
 }
