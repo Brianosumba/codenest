@@ -1,0 +1,48 @@
+.folder-section {
+  margin-top: 2rem;
+}
+
+.folder-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.folder-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.folder-card {
+  background-color: #e5e7eb;
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.folder-card:hover {
+  transform: translateY(-4px);
+}
+
+.folder-icon-wrapper {
+  margin-bottom: 0.5rem;
+}
+.folder-name {
+  font-weight: 600;
+  color: #111827;
+  font-size: 0.95rem;
+}
+
+.create-folder {
+  border: 2px dashed #4f46e5;
+  background-color: #f9fafb;
+}
+
+.create-folder .folder-name {
+  color: #4f46e5;
+}

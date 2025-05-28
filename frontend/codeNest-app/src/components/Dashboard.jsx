@@ -6,6 +6,7 @@ import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import FolderManager from "./FolderManager";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -77,6 +78,8 @@ const Dashboard = () => {
       <div className="welcome-card">
         <h1>Welcome to CodeNest, {username}!</h1>
         <p>Manage your code snippets and learning journey easily</p>
+
+        <FolderManager />
       </div>
 
       <div className="search-filter-container">
