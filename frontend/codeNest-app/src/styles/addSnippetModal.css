@@ -1,0 +1,141 @@
+/* === Add Snippet Modal Styles === */
+:root {
+  --primary-color: #6366f1;
+  --danger-color: #ef4444;
+  --bg-color: #f9fafb;
+  --white: #ffffff;
+  --text-color: #111827;
+  --muted-text: #6b7280;
+  --border-color: #e5e7eb;
+  --radius: 14px;
+  --shadow: 0 20px 48px rgba(0, 0, 0, 0.12);
+  --font: "Inter", system-ui, sans-serif;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  z-index: 1000;
+}
+
+.modal {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 2rem;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: var(--shadow);
+  font-family: var(--font);
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.modal input[type="text"] {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  font-size: 1rem;
+}
+
+.snippet-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.snippet-preview {
+  background: var(--bg-color);
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+.snippet-preview strong {
+  color: var(--text-color);
+}
+
+.snippet-preview button {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.2s;
+}
+
+.snippet-preview button:hover {
+  background-color: #4f46e5;
+}
+
+.close-btn {
+  margin-top: 1.5rem;
+  background-color: #e5e7eb;
+  color: var(--text-color);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  width: 100%;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s;
+}
+
+.close-btn:hover {
+  background-color: #d1d5db;
+}
+
+@media (max-width: 480px) {
+  .modal {
+    padding: 1.5rem;
+  }
+
+  .snippet-preview {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .snippet-preview button {
+    width: 100%;
+  }
+
+  .close-btn {
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+}

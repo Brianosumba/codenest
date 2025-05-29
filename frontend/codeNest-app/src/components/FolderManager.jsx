@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import API from "../API/api";
 import "../styles/folderManager.css";
 import { FaFolderPlus, FaFolder, FaEllipsisV } from "react-icons/fa";
@@ -8,6 +9,8 @@ const FolderManager = () => {
   const [folders, setFolders] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editingFolder, setEditingFolder] = useState(null);
+
+  const navigate = useNavigate();
 
   // === Fetch folders on load ===
   useEffect(() => {
@@ -82,16 +85,18 @@ const FolderManager = () => {
             key={folder._id}
             className="folder-card"
             style={{ backgroundColor: folder.color || "#e5e7eb" }}
+            onClick={() => navigate(`/folders/${folder._id}`)} // 👈 Navigera till detaljer
           >
             <div className="folder-icon-wrapper">
-              <FaFolder size={24} color="#fff" />
+              <FaFolder size={24} color="#fcd34d" />
             </div>
             <span className="folder-name">{folder.name}</span>
 
             {/* Edit menu icon */}
             <FaEllipsisV
               className="folder-menu"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation(); // 👈 Förhindra att klicket går till kortet
                 setEditingFolder(folder);
                 setShowModal(true);
               }}

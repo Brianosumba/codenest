@@ -1,4 +1,5 @@
 const Folder = require("../models/Folder");
+const Snippet = require("../models/Snippet");
 
 // Get all folders for logged-in user
 exports.getFolders = async (req, res) => {
@@ -99,5 +100,59 @@ exports.deleteFolder = async (req, res) => {
   } catch (err) {
     console.error("Delete folder error:", err); // 🐛 Lägg till mer info
     res.status(500).json({ message: "Failed to delete folder" });
+  }
+};
+
+// Get a single folder + its snippets
+exports.getFolderWithSnippets = async (req, res) => {
+  try {
+    const folder = await Folder.findOne({
+      _id: req.params.id,
+      userId: req.user.id,
+    });
+
+    if (!folder) {
+      return res.status(404).json({ message: "Folder not found" });
+    }
+    // Hämta alla snippets som finns i folderns snippetIds-array
+    const snippets = await Snippet.find({
+      _id: { $in: folder.snippetIds },
+    });
+    res.json({ folder, snippets });
+  } catch (err) {
+    console.error("Error fetching folder with snippets:", err);
+    res.status(500).json({ message: "failed to load folder details" });
+  }
+};
+
+//Add snippets to folder
+exports.addSnippetToFolder = async (req, res) => {
+  const folderId = req.params.id;
+  const { snippetId } = req.body;
+
+  if (!snippetId) {
+    return res.status(400).json({ message: "snippetId is required" });
+  }
+
+  try {
+    // Kontrollera att foldern tillhör användaren
+    const folder = await Folder.findOne({ _id: folderId, userId: req.user.id });
+
+    if (!folder) {
+      return res.status(404).json({ message: "Folder not found" });
+    }
+
+    // Kontrollera att snippet inte redan finns
+    if (folder.snippetIds.includes(snippetId)) {
+      return res.status(409).json({ message: "Snippet already in folder" });
+    }
+
+    folder.snippetIds.push(snippetId);
+    await folder.save();
+
+    res.status(200).json({ message: "Snippet added to folder", folder });
+  } catch (err) {
+    console.error("Error adding snippet to folder:", err);
+    res.status(500).json({ message: "Failed to add snippet to folder" });
   }
 };

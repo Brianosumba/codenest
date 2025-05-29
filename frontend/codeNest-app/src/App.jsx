@@ -9,7 +9,6 @@ import {
 
 import { useAuth } from "./context/AuthContext";
 
-import API from "./API/api";
 import Landing from "./components/Landing";
 import Navbar from "./components/Navbar";
 import Register from "./components/Register";
@@ -24,6 +23,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import RoleModal from "./components/RoleModal";
 import Toast from "./components/Toast";
 import ProfileSettings from "./components/ProfileSettings";
+import FolderDetails from "./components/FolderDetails";
 
 // 🔁 Inre komponent där useNavigate fungerar
 const AppContent = ({ toast, showToast }) => {
@@ -108,6 +108,14 @@ const AppContent = ({ toast, showToast }) => {
           element={
             <ProtectedRoute user={user}>
               <ProfileSettings showToast={showToast} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/folders/:id"
+          element={
+            <ProtectedRoute user={user}>
+              <FolderDetails />
             </ProtectedRoute>
           }
         />
