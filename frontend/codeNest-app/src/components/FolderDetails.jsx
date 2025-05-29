@@ -12,6 +12,32 @@ const FolderDetails = () => {
   const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
 
+  const handleRemoveSnippet = async (snippetId) => {
+    const confirm = window.confirm(
+      "Are you sure you want to remove this snippet?"
+    );
+    if (!confirm) return;
+
+    try {
+      const token = localStorage.getItem("token");
+
+      await API.patch(
+        `/folders/${id}/remove-snippet`,
+        { snippetId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Uppdatera UI utan att refetcha
+      setSnippets((prev) => prev.filter((s) => s._id !== snippetId));
+    } catch (err) {
+      console.error("❌ Failed to remove snippet from folder:", err);
+    }
+  };
+
   useEffect(() => {
     const fetchFolder = async () => {
       try {
@@ -43,7 +69,6 @@ const FolderDetails = () => {
         style={{ backgroundColor: folder.color || "#4f46e5" }}
       >
         <h2>📁 {folder.name}</h2>
-        {/* TODO: Lägg till 3-dots meny för redigera/radera */}
       </div>
 
       <AddSnippetModal
@@ -76,7 +101,12 @@ const FolderDetails = () => {
         ) : (
           <div className="snippet-grid">
             {snippets.map((snippet) => (
-              <SnippetCard key={snippet._id} snippet={snippet} />
+              <SnippetCard
+                key={snippet._id}
+                snippet={snippet}
+                showRemoveButton={true}
+                onRemove={() => handleRemoveSnippet(snippet._id)}
+              />
             ))}
           </div>
         )}

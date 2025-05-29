@@ -156,3 +156,25 @@ exports.addSnippetToFolder = async (req, res) => {
     res.status(500).json({ message: "Failed to add snippet to folder" });
   }
 };
+
+//remove Snippets from folder
+exports.removeSnippetFromFolder = async (req, res) => {
+  try {
+    const { snippetId } = req.body;
+
+    const folder = await Folder.findOneAndUpdate(
+      { _id: req.params.id, userId: req.user.id },
+      { $pull: { snippetIds: snippetId } },
+      { new: true }
+    );
+
+    if (!folder) {
+      return res.status(404).json({ message: "Folder not found" });
+    }
+
+    res.json({ message: "Snippet removed", folder });
+  } catch (err) {
+    console.error("Error removing snippet from folder:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};

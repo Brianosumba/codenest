@@ -2,8 +2,15 @@ import { Link } from "react-router-dom";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import "../styles/snippetCard.css";
 
-const SnippetCard = ({ snippet, showDescription = false, showTags = true }) => {
+const SnippetCard = ({
+  snippet,
+  showDescription = false,
+  showTags = true,
+  showRemoveButton = false,
+  onRemove,
+}) => {
   return (
     <div className="snippet-card">
       <div className="snippet-header">
@@ -51,7 +58,16 @@ const SnippetCard = ({ snippet, showDescription = false, showTags = true }) => {
         <Link to={`/snippet/${snippet._id}`} className="view-link">
           View Snippet
         </Link>
-        {snippet.isFavorite ? (
+
+        {showRemoveButton ? (
+          <button
+            className="remove-snippet-btn"
+            onClick={onRemove}
+            title="Remove from folder"
+          >
+            🗑 Remove
+          </button>
+        ) : snippet.isFavorite ? (
           <AiFillStar color="gold" title="Favorite" />
         ) : (
           <AiOutlineStar color="#ccc" title="Not Favorite" />
