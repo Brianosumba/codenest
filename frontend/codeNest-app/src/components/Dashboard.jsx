@@ -2,10 +2,7 @@ import { useEffect, useState } from "react";
 import "../styles/dashboard.css";
 import { useNavigate, Link } from "react-router-dom";
 import API from "../API/api";
-import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import SnippetCard from "./SnippetCard";
 import FolderManager from "./FolderManager";
 
 const Dashboard = () => {
@@ -122,46 +119,7 @@ const Dashboard = () => {
         ) : (
           <div className="snippet-grid">
             {filteredSnippets.map((snippet) => (
-              <div key={snippet._id} className="snippet-card">
-                <div className="snippet-header">
-                  <h3 className="snippet-title">{snippet.title}</h3>
-                  <div className="snippet-subtitle">
-                    <span>Language: {snippet.language}</span>
-                    <span>Category: {snippet.category}</span>
-                  </div>
-                </div>
-
-                <div className="snippet-tags">
-                  {snippet.tags.map((tag) => (
-                    <span key={tag} className={`tag ${tag.toLowerCase()}`}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="snippet-code-preview">
-                  <SyntaxHighlighter
-                    language={snippet.language.toLowerCase()}
-                    style={vscDarkPlus}
-                    customStyle={{ background: "none", padding: 0 }}
-                    wrapLines={true}
-                    showLineNumbers={false}
-                  >
-                    {snippet.code.split("\n").slice(0, 10).join("\n")}
-                  </SyntaxHighlighter>
-                </div>
-
-                <div className="snippet-actions">
-                  <Link to={`/snippet/${snippet._id}`} className="view-link">
-                    View Snippet
-                  </Link>
-                  {snippet.isFavorite ? (
-                    <AiFillStar color="gold" title="Favorite" />
-                  ) : (
-                    <AiOutlineStar color="#ccc" title="Not Favorite" />
-                  )}
-                </div>
-              </div>
+              <SnippetCard key={snippet._id} snippet={snippet} />
             ))}
           </div>
         )}

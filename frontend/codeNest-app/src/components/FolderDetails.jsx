@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import API from "../API/api";
 import "../styles/folderDetails.css";
 import AddSnippetModal from "./AddSnippetModal";
+import SnippetCard from "./SnippetCard";
 
 const FolderDetails = () => {
   const { id } = useParams();
@@ -75,12 +76,7 @@ const FolderDetails = () => {
         ) : (
           <div className="snippet-grid">
             {snippets.map((snippet) => (
-              <div key={snippet._id} className="snippet-card">
-                <h3>{snippet.title}</h3>
-                <p>
-                  {snippet.language} — {snippet.category}
-                </p>
-              </div>
+              <SnippetCard key={snippet._id} snippet={snippet} />
             ))}
           </div>
         )}

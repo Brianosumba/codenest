@@ -1,30 +1,3 @@
-:root {
-  /* === Neutral Base Colors === */
-  --primary-color: #111111; /* Mörk text och titlar */
-  --hover-color: #333333; /* Hovringsfärg */
-  --text-color: #111111; /* Allmän textfärg */
-  --bg-color: #ffffff; /* Vit bakgrund */
-
-  /* === Cards & Panels === */
-  --card-bg: #f8f8f8; /* Ljusgrå kortbakgrund */
-  --border-color: #dddddd; /* Grå kantlinjer */
-
-  /* === Buttons === */
-  --button-radius: 8px;
-
-  /* === Tag Defaults === */
-  --tag-bg: #222222;
-  --tag-text: #ffffff;
-
-  /* === Fonts === */
-  --font-main: "Poppins", "Inter", sans-serif;
-  --font-mono: "Fira Code", monospace;
-
-  /* === Shadows === */
-  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.08);
-  --shadow-hover: 0 6px 20px rgba(0, 0, 0, 0.12);
-}
-
 /* ========== Global Body Background for CodeNest (Neutral + Visual Flair) ========== */
 body {
   margin: 0;
