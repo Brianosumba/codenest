@@ -174,47 +174,49 @@
   background-color: #000000;
 }
 
-/* === Snippet Actions === */
 .snippet-actions {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* space out left & right */
   align-items: center;
-  margin-top: auto;
+  margin-top: 1.25rem;
+  flex-wrap: wrap;
 }
 
-.view-link {
+.snippet-actions .view-link {
   background-color: var(--primary-color);
-  color: #fff;
-  padding: 0.4rem 0.8rem;
-  font-size: 0.85rem;
-  border-radius: 6px;
+  color: white;
+  padding: 0.5rem 0.5rem;
+  border-radius: 8px;
+  font-weight: 600;
   text-decoration: none;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.view-link:hover {
+.snippet-actions .view-link:hover {
   background-color: var(--hover-color);
+  transform: scale(1.03);
 }
 
-.star-icon {
-  font-size: 1.2rem;
-  margin-left: 0.5rem;
+.snippet-actions svg {
+  font-size: 1.5rem;
 }
 
-/* === Remove Button === */
-.remove-snippet-btn {
-  background-color: transparent;
-  color: #ff4d4d;
+/* 🗑 Modern Remove Button Styling */
+.snippet-actions .remove-snippet-btn {
+  background-color: #ef4444;
+  color: white;
   border: none;
-  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
   cursor: pointer;
-  padding: 0.4rem 0.6rem;
-  border-radius: 6px;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.remove-snippet-btn:hover {
-  background-color: rgba(255, 77, 77, 0.1);
+.snippet-actions .remove-snippet-btn:hover {
+  background-color: #dc2626;
+  transform: scale(1.03);
 }
 
 /* === Responsive === */

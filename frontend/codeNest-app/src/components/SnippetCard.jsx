@@ -65,7 +65,7 @@ const SnippetCard = ({
             onClick={onRemove}
             title="Remove from folder"
           >
-            🗑 Remove
+            Remove
           </button>
         ) : snippet.isFavorite ? (
           <AiFillStar color="gold" title="Favorite" />

@@ -1,3 +1,13 @@
+:root {
+  --primary-color: #3b82f6;
+  --secondary-color: #f59e0b;
+  --hover-color: #2563eb;
+  --text-color: #111827;
+  --card-bg: #f9fafb;
+  --border-color: #e5e7eb;
+  --background-color: #ffffff;
+}
+
 /* ========== Global Body Background for CodeNest (Neutral + Visual Flair) ========== */
 body {
   margin: 0;
