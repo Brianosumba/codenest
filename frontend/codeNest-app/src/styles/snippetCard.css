@@ -108,7 +108,7 @@
   color: #fff;
 }
 
-/* === Tag colors (same as before) */
+/* === Tag colors === */
 .tag.html {
   background-color: #e34c26;
 }
@@ -174,26 +174,56 @@
   background-color: #000000;
 }
 
-.snippet-actions {
-  display: flex;
-  justify-content: space-between; /* space out left & right */
+/* === Buttons (shared) === */
+.snippet-button {
+  display: inline-flex;
   align-items: center;
-  margin-top: 1.25rem;
-  flex-wrap: wrap;
-}
-
-.snippet-actions .view-link {
-  background-color: var(--primary-color);
-  color: white;
-  padding: 0.5rem 0.5rem;
+  justify-content: center;
+  height: 40px;
+  box-sizing: border-box;
+  padding: 0.5rem 1rem;
   border-radius: 8px;
   font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1;
   text-decoration: none;
+  cursor: pointer;
+  border: none;
+  appearance: none;
+  text-align: center;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.snippet-actions .view-link:hover {
+/* === Actions Row === */
+.snippet-actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 1.25rem;
+}
+
+/* === Button Modifiers === */
+.view-link {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.view-link:hover {
   background-color: var(--hover-color);
+  transform: scale(1.03);
+}
+
+.snippet-button.remove-snippet-btn {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.snippet-button.remove-snippet-btn:hover {
+  background-color: #dc2626;
   transform: scale(1.03);
 }
 
@@ -201,25 +231,29 @@
   font-size: 1.5rem;
 }
 
-/* 🗑 Modern Remove Button Styling */
-.snippet-actions .remove-snippet-btn {
-  background-color: #ef4444;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.snippet-actions .remove-snippet-btn:hover {
-  background-color: #dc2626;
-  transform: scale(1.03);
-}
-
 /* === Responsive === */
+@media (min-width: 769px) {
+  .view-link {
+    margin-top: 6px; /* endast på desktop */
+  }
+}
+
+@media (max-width: 768px) {
+  .snippet-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .snippet-button {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .view-link {
+    margin-top: 0; /* nollställ på små skärmar */
+  }
+}
+
 @media (max-width: 600px) {
   .snippet-code-preview::-webkit-scrollbar {
     display: none;

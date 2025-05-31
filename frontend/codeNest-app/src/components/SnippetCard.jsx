@@ -55,13 +55,16 @@ const SnippetCard = ({
       )}
 
       <div className="snippet-actions">
-        <Link to={`/snippet/${snippet._id}`} className="view-link">
+        <Link
+          to={`/snippet/${snippet._id}`}
+          className="snippet-button view-link"
+        >
           View Snippet
         </Link>
 
         {showRemoveButton ? (
           <button
-            className="remove-snippet-btn"
+            className="snippet-button remove-snippet-btn"
             onClick={onRemove}
             title="Remove from folder"
           >
