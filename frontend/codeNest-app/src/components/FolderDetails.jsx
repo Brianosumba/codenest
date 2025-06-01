@@ -33,7 +33,7 @@ const FolderDetails = () => {
       );
 
       setSnippets((prev) => prev.filter((s) => s._id !== snippetId));
-      setSelectedToRemove("");
+      setSelectedSnippetToRemove("");
     } catch (err) {
       console.error("❌ Failed to remove snippet from folder:", err);
     }
