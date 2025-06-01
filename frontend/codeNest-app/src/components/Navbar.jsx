@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { FiUser } from "react-icons/fi";
 import "../styles/navbar.css";
 
 const Navbar = () => {
@@ -28,7 +29,7 @@ const Navbar = () => {
               className="user-info"
               onClick={() => setDropdownOpen((prev) => !prev)}
             >
-              <span className="user-icon">👤</span>
+              <FiUser className="user-icon" />
               <div className="user-meta">
                 <strong>{user.name}</strong>
                 {user.role && <small className="user-role">{user.role}</small>}
