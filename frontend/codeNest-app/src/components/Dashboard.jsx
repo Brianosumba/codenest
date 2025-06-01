@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import "../styles/dashboard.css";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import API from "../API/api";
 import SnippetCard from "./SnippetCard";
 import FolderManager from "./FolderManager";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const username = localStorage.getItem("username") || "User"; // Placeholder tills vi bygger auth-context
+  const username = localStorage.getItem("username") || "User";
 
   const [snippets, setSnippets] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -29,7 +29,6 @@ const Dashboard = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log("✅ Snippets fetched from API:", res.data);
         setSnippets(res.data);
       } catch (err) {
         console.error(err);
@@ -41,13 +40,8 @@ const Dashboard = () => {
     fetchSnippets();
   }, []);
 
-  useEffect(() => {
-    console.log("Snippets fetched from API:", snippets);
-  }, [snippets]);
-
   const filteredSnippets = snippets.filter((snippet) => {
     const query = searchQuery.toLowerCase();
-
     const matchTitle = snippet.title?.toLowerCase().includes(query);
     const matchLanguage = snippet.language?.toLowerCase().includes(query);
     const matchCategory = snippet.category?.toLowerCase().includes(query);
@@ -75,7 +69,6 @@ const Dashboard = () => {
       <div className="welcome-card">
         <h1>Welcome to CodeNest, {username}!</h1>
         <p>Manage your code snippets and learning journey easily</p>
-
         <FolderManager />
       </div>
 
@@ -119,7 +112,11 @@ const Dashboard = () => {
         ) : (
           <div className="snippet-grid">
             {filteredSnippets.map((snippet) => (
-              <SnippetCard key={snippet._id} snippet={snippet} />
+              <SnippetCard
+                key={snippet._id}
+                snippet={snippet}
+                variant="dashboard"
+              />
             ))}
           </div>
         )}

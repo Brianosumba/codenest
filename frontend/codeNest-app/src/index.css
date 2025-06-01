@@ -1,3 +1,19 @@
+/* === Box sizing fix för all layout === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  box-sizing: border-box;
+  width: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
 :root {
   --primary-color: #3b82f6;
   --secondary-color: #f59e0b;
@@ -15,10 +31,12 @@ body {
   font-family: var(--font-main);
   min-height: 100vh;
   background-image: url("https://www.transparenttextures.com/patterns/cubes.png"),
-    linear-gradient(to right top, #ffffff, #eeeeee); /* ljus men neutral gradient */
+    linear-gradient(to right top, #ffffff, #eeeeee);
   background-repeat: repeat, no-repeat;
   background-size: auto, cover;
   background-attachment: fixed;
   color: var(--text-color);
   line-height: 1.6;
+  width: 100%;
+  overflow-x: hidden;
 }

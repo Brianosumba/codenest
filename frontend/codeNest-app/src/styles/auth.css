@@ -1,3 +1,10 @@
+/* === Global Box-Sizing Fix === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 /* === Login/Register Container === */
 .auth-container {
   width: 100%;
@@ -6,11 +13,12 @@
   padding: 2rem;
   background: var(--card-bg, #ffffff);
   border: 1px solid var(--border-color, #e5e7eb);
-  border-radius: 12px;
+  border-radius: 0.75rem;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
   text-align: center;
   font-family: var(--font-main, "Inter", sans-serif);
   color: var(--text-color, #1f2937);
+  overflow-x: hidden;
 }
 
 /* === Header Title === */
@@ -24,9 +32,11 @@
 /* === Inputs === */
 .auth-container input {
   width: 100%;
+  max-width: 100%;
+  display: block;
   padding: 0.75rem 1rem;
   margin: 0.75rem 0;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   border: 1px solid #d1d5db;
   background-color: #f9fafb;
   font-size: 1rem;
@@ -42,13 +52,15 @@
 /* === Submit Button === */
 .auth-container button {
   width: 100%;
-  padding: 0.75rem;
+  max-width: 100%;
+  display: block;
+  padding: 0.75rem 1rem;
   background: linear-gradient(135deg, var(--primary-color, #007bff), #0056b3);
   border: none;
   color: white;
   font-weight: 600;
   font-size: 1rem;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   cursor: pointer;
   margin-top: 1rem;
   transition: background 0.3s ease, transform 0.2s ease;
@@ -99,7 +111,7 @@
   width: 28px;
   height: 28px;
   animation: spin 1s linear infinite;
-  margin: 10px auto;
+  margin: 0.625rem auto;
 }
 
 @keyframes spin {
@@ -129,13 +141,22 @@
 
 @media (max-width: 480px) {
   .auth-container {
-    padding: 1.25rem;
+    padding: 1rem;
     margin: 4vh auto;
+    max-width: 90vw;
   }
 
   .auth-container input,
   .auth-container button {
     font-size: 0.95rem;
     padding: 0.65rem 0.9rem;
+  }
+
+  .auth-container h2 {
+    font-size: 1.3rem;
+  }
+
+  .forgot-password-link {
+    font-size: 0.85rem;
   }
 }

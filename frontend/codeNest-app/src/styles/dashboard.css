@@ -1,3 +1,18 @@
+/* === Global Reset & Box Sizing === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 /* === Dashboard Container === */
 .dashboard-container {
   max-width: 1200px;
@@ -5,16 +20,21 @@
   padding: 2rem 1rem;
   font-family: var(--font-main);
   color: var(--text-color);
+  width: 100%;
+  overflow-x: hidden; /* fixar grid spill */
 }
 
 /* === Welcome Card === */
 .welcome-card {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
   background-color: var(--card-bg);
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: var(--shadow-card);
+  padding: 2.5rem 2rem;
   text-align: center;
+  box-shadow: var(--shadow-card);
   margin-bottom: 2rem;
+  border-radius: 0;
 }
 
 .welcome-card h1 {
@@ -26,7 +46,7 @@
 
 .welcome-card p {
   color: var(--text-color);
-  opacity: 0.8;
+  opacity: 0.85;
   font-size: 1.1rem;
 }
 
@@ -45,8 +65,9 @@
   border-radius: 8px;
   font-size: 1rem;
   flex: 1;
-  background: var(--input-bg);
+  background: var(--input-bg, #fff);
   color: var(--text-color);
+  min-width: 220px;
 }
 
 /* === Snippet Grid === */
@@ -55,9 +76,30 @@
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
   margin-top: 2rem;
+  width: 100%;
+  overflow: hidden; /* tillägg */
+  padding: 0 0.5rem; /* lite extra padding för små skärmar */
+  box-sizing: border-box;
 }
 
-/* === Create New Button === */
+/* === Snippet Card === */
+.snippet-card {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  overflow: hidden; /* säkerhetsåtgärd mot utstick */
+  word-break: break-word;
+  padding: 1rem; /* extra spacing inuti */
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: var(--shadow-card);
+}
+
+/* === Create New Snippet Button === */
 .cta-snippet {
   text-align: center;
   margin: 3rem 0 1rem;
@@ -112,18 +154,88 @@
   display: inline-block;
 }
 
-/* === Responsive === */
+/* === Checkbox Styling === */
+label input[type="checkbox"] {
+  margin-right: 0.5rem;
+  transform: translateY(1px);
+}
+
+/* === Responsive Breakpoints === */
+@media (max-width: 1200px) {
+  .dashboard-container {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .welcome-card h1 {
+    font-size: 2.2rem;
+  }
+
+  .welcome-card p {
+    font-size: 1rem;
+  }
+}
+
 @media (max-width: 768px) {
   .search-filter-container {
     flex-direction: column;
   }
 
+  .search-filter-container input,
+  .search-filter-container select {
+    width: 100%;
+  }
+
   .snippet-grid {
     grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .snippet-card {
+    width: 100%;
   }
 
   .cta-snippet button,
   .public-snippets-btn {
     width: 100%;
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .welcome-card {
+    padding: 1.5rem 1rem;
+    border-radius: 0;
+  }
+
+  .welcome-card h1 {
+    font-size: 2rem;
+  }
+
+  .welcome-card p {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-container {
+    padding: 1rem;
+  }
+
+  .welcome-card {
+    padding: 1.25rem;
+  }
+
+  .welcome-card h1 {
+    font-size: 1.7rem;
+  }
+
+  .welcome-card p {
+    font-size: 0.9rem;
+  }
+
+  .cta-snippet button,
+  .public-snippets-btn {
+    font-size: 0.95rem;
   }
 }

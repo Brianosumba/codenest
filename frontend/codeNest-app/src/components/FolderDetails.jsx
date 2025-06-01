@@ -105,7 +105,8 @@ const FolderDetails = () => {
                 key={snippet._id}
                 snippet={snippet}
                 showRemoveButton={true}
-                onRemove={() => handleRemoveSnippet(snippet._id)}
+                onRemove={() => handleRemove(snippet._id)}
+                variant="folder"
               />
             ))}
           </div>

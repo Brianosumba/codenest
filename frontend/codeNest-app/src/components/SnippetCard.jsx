@@ -10,9 +10,14 @@ const SnippetCard = ({
   showTags = true,
   showRemoveButton = false,
   onRemove,
+  variant = "dashboard", // <-- NY PROPS
 }) => {
   return (
-    <div className="snippet-card">
+    <div
+      className={`snippet-card ${
+        variant === "folder" ? "folder-style" : "dashboard-style"
+      }`}
+    >
       <div className="snippet-header">
         <h3 className="snippet-title">{snippet.title}</h3>
 
@@ -28,10 +33,10 @@ const SnippetCard = ({
         </div>
       </div>
 
-      {showTags && (
+      {showTags && snippet.tags?.length > 0 && (
         <div className="snippet-tags">
-          {snippet.tags?.map((tag) => (
-            <span key={tag} className={`tag ${tag.toLowerCase()}`}>
+          {snippet.tags.map((tag) => (
+            <span key={tag} className={`tag ${tag.toLowerCase()}`} title={tag}>
               {tag}
             </span>
           ))}
@@ -46,7 +51,9 @@ const SnippetCard = ({
           customStyle={{ background: "none", padding: 0 }}
           showLineNumbers={false}
         >
-          {snippet.code?.split("\n").slice(0, 10).join("\n")}
+          {snippet.code
+            ? snippet.code.split("\n").slice(0, 10).join("\n")
+            : "// No code provided"}
         </SyntaxHighlighter>
       </div>
 
@@ -58,11 +65,22 @@ const SnippetCard = ({
         <Link
           to={`/snippet/${snippet._id}`}
           className="snippet-button view-link"
+          aria-label={`View snippet ${snippet.title}`}
         >
           View Snippet
         </Link>
 
-        {showRemoveButton ? (
+        {variant === "dashboard" && (
+          <div className="star-icon">
+            {snippet.isFavorite ? (
+              <AiFillStar color="gold" title="Favorite" />
+            ) : (
+              <AiOutlineStar color="#ccc" title="Not Favorite" />
+            )}
+          </div>
+        )}
+
+        {variant === "folder" && showRemoveButton && (
           <button
             className="snippet-button remove-snippet-btn"
             onClick={onRemove}
@@ -70,10 +88,6 @@ const SnippetCard = ({
           >
             Remove
           </button>
-        ) : snippet.isFavorite ? (
-          <AiFillStar color="gold" title="Favorite" />
-        ) : (
-          <AiOutlineStar color="#ccc" title="Not Favorite" />
         )}
       </div>
     </div>
