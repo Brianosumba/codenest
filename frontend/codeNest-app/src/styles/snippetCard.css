@@ -21,11 +21,16 @@
 
 /* === Folder Specific Style === */
 .snippet-card.folder-style {
-  border: 2px dashed #ef4444;
-  background-color: #fff5f5;
+  border: 1px solid var(--border-color);
+  background-color: var(--card-bg);
   padding: 1.5rem;
   border-radius: 0.625rem;
   box-shadow: var(--shadow-card);
+}
+
+.snippet-card.folder-style .snippet-actions {
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 .snippet-card:hover {
@@ -211,7 +216,7 @@
   margin-top: 1.25rem;
   padding: 0 0.5rem;
   flex-wrap: nowrap;
-  height: 2.5rem;
+  height: auto;
 }
 
 /* === View Link as Button === */

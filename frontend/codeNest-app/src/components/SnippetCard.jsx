@@ -4,20 +4,9 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import "../styles/snippetCard.css";
 
-const SnippetCard = ({
-  snippet,
-  showDescription = false,
-  showTags = true,
-  showRemoveButton = false,
-  onRemove,
-  variant = "dashboard", // <-- NY PROPS
-}) => {
+const SnippetCard = ({ snippet, showDescription = false, showTags = true }) => {
   return (
-    <div
-      className={`snippet-card ${
-        variant === "folder" ? "folder-style" : "dashboard-style"
-      }`}
-    >
+    <div className="snippet-card">
       <div className="snippet-header">
         <h3 className="snippet-title">{snippet.title}</h3>
 
@@ -70,25 +59,13 @@ const SnippetCard = ({
           View Snippet
         </Link>
 
-        {variant === "dashboard" && (
-          <div className="star-icon">
-            {snippet.isFavorite ? (
-              <AiFillStar color="gold" title="Favorite" />
-            ) : (
-              <AiOutlineStar color="#ccc" title="Not Favorite" />
-            )}
-          </div>
-        )}
-
-        {variant === "folder" && showRemoveButton && (
-          <button
-            className="snippet-button remove-snippet-btn"
-            onClick={onRemove}
-            title="Remove from folder"
-          >
-            Remove
-          </button>
-        )}
+        <div className="star-icon">
+          {snippet.isFavorite ? (
+            <AiFillStar color="gold" title="Favorite" />
+          ) : (
+            <AiOutlineStar color="#ccc" title="Not Favorite" />
+          )}
+        </div>
       </div>
     </div>
   );

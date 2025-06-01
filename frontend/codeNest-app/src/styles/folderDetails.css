@@ -1,83 +1,170 @@
-.folder-details {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-  font-family: "Poppins", sans-serif;
-}
-
+/* === Folder Header === */
 .folder-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #4f46e5;
-  color: white;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem 2rem;
+  color: #fff;
+  text-align: center;
+  border-radius: 0.5rem;
   margin-bottom: 2rem;
+  box-shadow: var(--shadow-card);
 }
 
 .folder-header h2 {
   font-size: 2rem;
-  margin: 0;
+  font-weight: 700;
+}
+
+/* === Actions Section === */
+.folder-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* <-- fixar vertikal alignment */
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  padding: 0 0.5rem;
+  gap: 1rem;
+}
+
+/* === Add Snippet Button === */
+.add-snippets-btn {
+  background-color: var(--primary-color);
+  color: #fff;
+  height: 2.5rem;
+  padding: 0 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  position: relative;
+  top: -0.5rem;
+}
+
+.add-snippets-btn:hover {
+  background-color: var(--hover-color);
+  transform: translateY(-1px);
+}
+
+/* === Remove Snippet Control === */
+.remove-snippet-control {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.folder-actions {
+/* === Dropdown === */
+.remove-snippet-control select {
+  height: 2.5rem;
+  padding: 0 0.8rem;
+  font-size: 0.95rem;
+  border-radius: 0.4rem;
+  border: 1px solid var(--border-color);
+  background: white;
+  color: var(--text-color);
+  box-sizing: border-box;
   display: flex;
-  justify-content: flex-end;
-  margin-bottom: 1.5rem;
+  align-items: center;
 }
 
-.add-snippets-btn {
-  background-color: #4f46e5;
+/* Focus style */
+.remove-snippet-control select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+/* === Remove Button === */
+.remove-snippet-global-btn {
+  background-color: #ef4444;
   color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-size: 1rem;
+  height: 2.5rem;
+  padding: 0 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
+  border: none;
+  border-radius: 0.4rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  position: relative;
+  top: -0.5rem;
 }
 
-.add-snippets-btn:hover {
-  background-color: #4338ca;
+.remove-snippet-global-btn:hover:enabled {
+  background-color: #dc2626;
+  transform: translateY(-1px);
 }
 
-.folder-snippets {
-  min-height: 200px;
+.remove-snippet-global-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
+/* === Snippet Grid === */
+.folder-snippets .snippet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  padding-bottom: 2rem;
+}
+
+/* === Empty Folder Text === */
 .empty-folder {
   text-align: center;
   font-size: 1.1rem;
-  color: #666;
-  background-color: #f9fafb;
-  padding: 2rem;
-  border: 2px dashed #ddd;
-  border-radius: 12px;
+  opacity: 0.75;
+  margin-top: 2rem;
+  color: var(--text-color);
 }
 
-.snippet-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
-}
-
-/* Responsive */
+/* === Responsive Breakpoints === */
 @media (max-width: 768px) {
+  .folder-header h2 {
+    font-size: 1.7rem;
+  }
+
+  .folder-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .remove-snippet-control {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 0.75rem;
+  }
+
+  .remove-snippet-control select,
+  .remove-snippet-global-btn,
+  .add-snippets-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .folder-header {
+    padding: 1rem;
+  }
+
   .folder-header h2 {
     font-size: 1.5rem;
   }
 
-  .add-snippets-btn {
-    width: 100%;
+  .add-snippets-btn,
+  .remove-snippet-global-btn {
+    font-size: 0.95rem;
+    padding: 0.6rem 1rem;
   }
 
-  .snippet-grid {
-    grid-template-columns: 1fr;
+  .remove-snippet-control select {
+    font-size: 0.95rem;
   }
 }

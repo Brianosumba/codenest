@@ -11,6 +11,7 @@ const FolderDetails = () => {
   const [snippets, setSnippets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [selectedSnippetToRemove, setSelectedSnippetToRemove] = useState("");
 
   const handleRemoveSnippet = async (snippetId) => {
     const confirm = window.confirm(
@@ -31,8 +32,8 @@ const FolderDetails = () => {
         }
       );
 
-      // Uppdatera UI utan att refetcha
       setSnippets((prev) => prev.filter((s) => s._id !== snippetId));
+      setSelectedToRemove("");
     } catch (err) {
       console.error("❌ Failed to remove snippet from folder:", err);
     }
@@ -49,7 +50,7 @@ const FolderDetails = () => {
         });
 
         setFolder(res.data.folder);
-        setSnippets(res.data.snippets); // backend returnerar folder + tillhörande snippets
+        setSnippets(res.data.snippets);
       } catch (err) {
         console.error("Failed to fetch folder details:", err);
       } finally {
@@ -89,6 +90,34 @@ const FolderDetails = () => {
         >
           ➕ Add Snippets
         </button>
+
+        {snippets.length > 0 && (
+          <div className="remove-snippet-control">
+            <select
+              onChange={(e) => setSelectedSnippetToRemove(e.target.value)}
+              value={selectedSnippetToRemove}
+            >
+              <option value="">Select snippet to remove</option>
+              {snippets.map((s) => (
+                <option key={s._id} value={s._id}>
+                  {s.title}
+                </option>
+              ))}
+            </select>
+
+            <button
+              className="remove-snippet-global-btn"
+              onClick={() => {
+                if (!selectedSnippetToRemove) return;
+                handleRemoveSnippet(selectedSnippetToRemove);
+                setSelectedSnippetToRemove(""); // reset efter borttagning
+              }}
+              disabled={!selectedSnippetToRemove}
+            >
+              Remove
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="folder-snippets">
@@ -101,13 +130,7 @@ const FolderDetails = () => {
         ) : (
           <div className="snippet-grid">
             {snippets.map((snippet) => (
-              <SnippetCard
-                key={snippet._id}
-                snippet={snippet}
-                showRemoveButton={true}
-                onRemove={() => handleRemove(snippet._id)}
-                variant="folder"
-              />
+              <SnippetCard key={snippet._id} snippet={snippet} />
             ))}
           </div>
         )}
