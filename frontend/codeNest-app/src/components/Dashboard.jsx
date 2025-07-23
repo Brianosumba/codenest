@@ -4,10 +4,12 @@ import { useNavigate } from "react-router-dom";
 import API from "../API/api";
 import SnippetCard from "./SnippetCard";
 import FolderManager from "./FolderManager";
+import { useAuth } from "../context/AuthContext";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const username = localStorage.getItem("username") || "User";
+  const { user } = useAuth();
+  const username = user?.name || "User";
 
   const [snippets, setSnippets] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -112,11 +114,7 @@ const Dashboard = () => {
         ) : (
           <div className="snippet-grid">
             {filteredSnippets.map((snippet) => (
-              <SnippetCard
-                key={snippet._id}
-                snippet={snippet}
-                variant="dashboard"
-              />
+              <SnippetCard key={snippet._id} snippet={snippet} />
             ))}
           </div>
         )}
