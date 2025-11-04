@@ -21,10 +21,13 @@ const Login = () => {
     setError("");
     setIsLoading(true);
 
+    console.log("📤 Sending login request with:", formData);
+
     try {
       const res = await API.post("/auth/login", formData);
-      const { token } = res.data;
+      console.log("✅ Login response:", res);
 
+      const { token } = res.data;
       //  Använd login-funktionen från AuthContext
       await login(token);
 
@@ -37,6 +40,7 @@ const Login = () => {
         navigate("/");
       }
     } catch (err) {
+      console.error("❌ Login error:", err.response);
       setError(err.response?.data?.message || "Login error.");
     } finally {
       setIsLoading(false);

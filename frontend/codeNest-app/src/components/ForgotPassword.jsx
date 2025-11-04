@@ -17,11 +17,17 @@ const ForgotPassword = () => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
+
+    console.log("📤 Sending forgot-password request with:", email);
+
     try {
       const res = await API.post("/auth/forgot-password", { email });
+      console.log("✅ Forgot-password response:", res);
+
       setMessage(res.data.message);
       setEmailVerified(true);
     } catch (err) {
+      console.error("❌ Forgot-password error:", err.response);
       setError(err.response?.data?.message || "Error verifying email");
     } finally {
       setIsLoading(false);

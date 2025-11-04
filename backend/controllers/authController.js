@@ -48,6 +48,7 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    console.log("Incoming login:", email, password);
 
     // Find user
     const user = await User.findOne({ email });
@@ -84,6 +85,8 @@ exports.login = async (req, res) => {
 // FORGOT PASSWORD
 exports.forgotPassword = async (req, res) => {
   const { email } = req.body;
+  console.log("Forgot password request for:", email);
+
   try {
     const user = await User.findOne({ email });
     if (!user) {
