@@ -9,26 +9,27 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [needRoleSetup, setNeedsRoleSetup] = useState(false);
 
-  //  Hämta användaren baserat på token
-  const fetchuser = async () => {
-    if (!token) {
+  //  Hämta användaren baserat på token (kan ta token som argument)
+  const fetchuser = async (tokenOverride) => {
+    const activeToken = tokenOverride ?? token;
+
+    if (!activeToken) {
       setLoading(false);
-      return;
+      return null;
     }
 
     try {
       const res = await API.get("/users/me", {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${activeToken}` },
       });
 
-      setUser(res.data);
+      const currentUser = res.data;
+      setUser(currentUser);
 
-      // Kolla om användaren saknar roll
-      if (!res.data.role || res.data.role.trim() === "") {
-        setNeedsRoleSetup(true);
-      } else {
-        setNeedsRoleSetup(false);
-      }
+      const missingRole = !currentUser.role || currentUser.role.trim() === "";
+      setNeedsRoleSetup(missingRole);
+
+      return currentUser;
     } catch (err) {
       console.error("Auth fetch failed", err);
       logout();
@@ -42,13 +43,16 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token");
     setToken("");
     setUser(null);
+    setNeedsRoleSetup(false);
   };
-
-  //  Logga in & hämta användaren
+  // Logga in: spara token + hämta user med tokenFromServer (inte stale token)
   const login = async (tokenFromServer) => {
+    setLoading(true);
     localStorage.setItem("token", tokenFromServer);
     setToken(tokenFromServer);
-    await fetchuser();
+
+    const currentUser = await fetchuser(tokenFromServer);
+    return currentUser;
   };
 
   useEffect(() => {
