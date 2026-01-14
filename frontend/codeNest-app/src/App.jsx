@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -25,14 +25,15 @@ import Toast from "./components/Toast";
 import ProfileSettings from "./components/ProfileSettings";
 import FolderDetails from "./components/FolderDetails";
 
-// 🔁 Inre komponent där useNavigate fungerar
+// Inre komponent där useNavigate fungerar
 const AppContent = ({ toast, showToast }) => {
   const navigate = useNavigate();
-  const { user, needsRoleSetup } = useAuth();
+  const { user, needRoleSetup } = useAuth();
 
   return (
     <>
       <Navbar user={user} />
+
       <Toast
         message={toast.message}
         visible={toast.visible}
@@ -40,7 +41,7 @@ const AppContent = ({ toast, showToast }) => {
       />
 
       {/* Visa modal om användaren inte har valt roll */}
-      {user?.role === "" && (
+      {needRoleSetup && (
         <RoleModal
           showToast={showToast}
           onClose={() => navigate("/dashboard")}
@@ -124,9 +125,9 @@ const AppContent = ({ toast, showToast }) => {
   );
 };
 
-//  Yttre komponent: bara auth och toast
+// Yttre komponent: bara auth och toast
 const App = () => {
-  const { user, loading, loadingUser } = useAuth();
+  const { loading } = useAuth();
 
   const [toast, setToast] = useState({
     message: "",
@@ -143,11 +144,8 @@ const App = () => {
 
   return (
     <Router>
-      {!loadingUser && (
-        <AppContent user={user} toast={toast} showToast={showToast} />
-      )}
+      {!loading && <AppContent toast={toast} showToast={showToast} />}
     </Router>
   );
 };
-
 export default App;

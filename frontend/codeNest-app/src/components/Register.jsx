@@ -35,9 +35,15 @@ const Register = () => {
 
       const { token } = loginRes.data;
 
-      await login(token);
-
-      navigate("/dashboard");
+      const currentUser = await login(token);
+      if (
+        currentUser &&
+        (!currentUser.role || currentUser.role.trim() === "")
+      ) {
+        navigate("/choose-role");
+      } else {
+        navigate("/dashboard");
+      }
     } catch (err) {
       setError(err.response?.data?.message || "Registration error.");
     } finally {

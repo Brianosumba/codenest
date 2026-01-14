@@ -29,11 +29,9 @@ const Login = () => {
 
       const { token } = res.data;
       //  Använd login-funktionen från AuthContext
-      await login(token);
+      const currentUser = await login(token);
 
-      const hasRole =
-        res.data.user.role && res.data.user.role.trim().length > 0;
-
+      const hasRole = currentUser.role && currentUser.role.trim().length > 0;
       if (hasRole) {
         navigate("/dashboard");
       } else {
