@@ -11,18 +11,41 @@ const folderRoutes = require("./routes/folderRoutes");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-//Middleware
-app.use(cors());
+// Render/proxy-friendly (bra best practice)
+app.set("trust proxy", 1);
+
+// Middleware
 app.use(express.json());
 
-//Routes
+// CORS (best practice): tillåt localhost + din Netlify URL via env
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:3000",
+  process.env.CLIENT_URL, // sätts på Render till din Netlify URL, ex https://dinapp.netlify.app
+].filter(Boolean);
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Tillåt requests utan origin (t.ex. Postman) + tillåt whitelisted origins
+      if (!origin || allowedOrigins.includes(origin))
+        return callback(null, true);
+      return callback(new Error(`CORS blocked for origin: ${origin}`));
+    },
+    credentials: true,
+  })
+);
+
+// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/snippets", snippetRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/folders", folderRoutes);
 
-//MongoDB connection
-console.log("🔍 MONGO_URI från env:", process.env.MONGO_URL);
+// Health check (bra för Render + snabb test)
+app.get("/api/health", (req, res) => res.json({ ok: true }));
+
+// MongoDB connection
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => {
