@@ -73,7 +73,9 @@ const EditSnippet = () => {
 
       const payload = {
         ...formData,
-        tags: formData.tags.map((tag) => tag.toLowerCase()),
+        tags: formData.tags
+          .map((tag) => tag.trim().toLowerCase())
+          .filter(Boolean),
       };
 
       await API.put(`/snippets/${id}`, payload, {
