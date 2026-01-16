@@ -143,11 +143,22 @@ const Landing = () => {
               </div>
 
               <div className="tags">
-                {snippet.tags.map((tag, i) => (
-                  <span key={i} className={`tag ${tag.toLowerCase()}`}>
-                    {tag}
-                  </span>
-                ))}
+                {snippet.tags?.map((tag, i) => {
+                  const label = String(tag ?? "").trim();
+                  const safeClass = label
+                    .toLowerCase()
+                    .replace(/[^a-z0-9_-]/g, "-");
+
+                  return (
+                    <span
+                      key={`${safeClass}-${i}`}
+                      className={`tag tag-${safeClass}`}
+                      title={label}
+                    >
+                      {label}
+                    </span>
+                  );
+                })}
               </div>
 
               <div className="snippet-code">
