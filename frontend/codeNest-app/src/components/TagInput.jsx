@@ -17,78 +17,85 @@ const defaultSuggestedTags = [
   "CSS",
   "Routing",
   "Validation",
-];
+].map((t) => t.toLowerCase());
 
 const TagInput = ({ value = [], onChange }) => {
   const [inputValue, setInputValue] = useState("");
   const [customTags, setCustomTags] = useState([]);
 
   const tags = value || [];
-
   const normalizedInput = inputValue.trim().toLowerCase();
 
-  const allSuggestions = [
-    ...new Set([
-      ...defaultSuggestedTags.map((t) => t.toLowerCase()),
-      ...customTags,
-    ]),
-  ];
+  const allSuggestions = [...new Set([...defaultSuggestedTags, ...customTags])];
 
   const filteredSuggestions = allSuggestions.filter(
     (tag) =>
       !tags.includes(tag) &&
-      tag.includes(normalizedInput) &&
-      normalizedInput.length > 0
+      normalizedInput.length > 0 &&
+      tag.includes(normalizedInput)
   );
 
-  const addTag = (tag) => {
-    const newTag = tag.trim().toLowerCase();
+  const addTag = (rawTag) => {
+    const newTag = (rawTag || "").trim().toLowerCase();
     if (!newTag) return;
 
     if (!tags.includes(newTag)) {
       onChange([...tags, newTag]);
-      if (!defaultSuggestedTags.map((t) => t.toLowerCase()).includes(newTag)) {
+
+      if (!defaultSuggestedTags.includes(newTag)) {
         setCustomTags((prev) =>
           prev.includes(newTag) ? prev : [...prev, newTag]
         );
       }
     }
-    setInputValue(""); // Rensa fältet efter tillägg
+
+    setInputValue("");
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" || e.key === ",") {
       e.preventDefault();
       addTag(inputValue);
-    } else if (e.key === "Backspace" && !inputValue) {
+      return;
+    }
+
+    if (e.key === "Backspace" && !inputValue) {
       onChange(tags.slice(0, tags.length - 1));
     }
   };
 
+  const handleBlur = () => {
+    // Lägg till taggen när man klickar ut ur fältet (super robust)
+    if (normalizedInput) addTag(inputValue);
+  };
+
   const handleTagClick = (tag) => {
-    if (!tags.includes(tag)) {
-      onChange([...tags, tag]);
-    }
-    setInputValue(""); // Rensa efter klick
+    addTag(tag);
   };
 
   const removeTag = (tagToRemove) => {
-    onChange(tags.filter((t) => t !== tagToRemove));
-    if (!defaultSuggestedTags.includes(tagToRemove)) {
-      setCustomTags((prev) => prev.filter((t) => t !== tagToRemove));
-    }
+    const normalized = tagToRemove.trim().toLowerCase();
+    onChange(tags.filter((t) => t !== normalized));
+    setCustomTags((prev) => prev.filter((t) => t !== normalized));
   };
 
   return (
     <section className="form-section">
       <h3>Tags</h3>
-      <input
-        type="text"
-        placeholder="Add tag and press Enter"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        onKeyDown={handleKeyDown}
-      />
+
+      <div style={{ display: "flex", gap: "8px" }}>
+        <input
+          type="text"
+          placeholder="Add tag and press Enter"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+          onBlur={handleBlur}
+        />
+        <button type="button" onClick={() => addTag(inputValue)}>
+          Add
+        </button>
+      </div>
 
       {/* Valda taggar */}
       <div className="selected-tags">

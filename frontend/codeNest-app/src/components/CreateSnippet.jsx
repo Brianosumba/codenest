@@ -200,9 +200,10 @@ const CreateSnippet = () => {
         {/* Taggar */}
         <TagInput
           value={formData.tags}
-          onChange={(updatedTags) =>
-            setFormData((prev) => ({ ...prev, tags: updatedTags }))
-          }
+          onChange={(updatedTags) => {
+            console.log("UPDATED TAGS:", updatedTags);
+            setFormData((prev) => ({ ...prev, tags: updatedTags }));
+          }}
         />
 
         {/* Favorit*/}
