@@ -24,11 +24,19 @@ const SnippetCard = ({ snippet, showDescription = false, showTags = true }) => {
 
       {showTags && snippet.tags?.length > 0 && (
         <div className="snippet-tags">
-          {snippet.tags.map((tag) => (
-            <span key={tag} className={`tag ${tag.toLowerCase()}`} title={tag}>
-              {tag}
-            </span>
-          ))}
+          {snippet.tags.map((tag) => {
+            const label = tag.trim();
+            const safeClass = label.toLowerCase().replace(/[^a-z0-9_-]/g, "-");
+            return (
+              <span
+                key={safeClass}
+                className={`tag tag-${safeClass}`}
+                title={label}
+              >
+                {label}
+              </span>
+            );
+          })}
         </div>
       )}
 
