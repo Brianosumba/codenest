@@ -86,9 +86,7 @@ const CreateSnippet = () => {
     try {
       const payload = {
         ...formData,
-        tags: formData.tags
-          .map((tag) => tag.trim().toLowerCase())
-          .filter(Boolean),
+        tags: formData.tags.map((tag) => tag.toLowerCase()),
       };
 
       const token = localStorage.getItem("token");
