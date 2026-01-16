@@ -102,69 +102,88 @@
 }
 
 /* === Tag Colors === */
-.tag.html {
+
+.tag.tag-html {
   background-color: #e34c26;
 }
-.tag.css {
+.tag.tag-css {
   background-color: #264de4;
 }
-.tag.javascript {
+
+.tag.tag-javascript {
   background-color: #f0db4f;
   color: #000;
 }
-.tag.typescript {
+.tag.tag-typescript {
   background-color: #3178c6;
 }
-.tag.python {
+.tag.tag-python {
   background-color: #3572a5;
 }
-.tag.php {
+.tag.tag-php {
   background-color: #8993be;
 }
-.tag.react {
+
+.tag.tag-react {
   background-color: #61dafb;
   color: #000;
 }
-.tag.node {
+
+.tag.tag-node,
+.tag.tag-nodejs,
+.tag.tag-node-js {
   background-color: #3c873a;
 }
-.tag.laravel {
+
+.tag.tag-laravel {
   background-color: #f9322c;
 }
-.tag.routes,
-.tag.route {
+
+.tag.tag-routes,
+.tag.tag-route {
   background-color: #6d28d9;
 }
-.tag.controller {
+
+.tag.tag-controller {
   background-color: #8b5cf6;
 }
-.tag.mvc {
+.tag.tag-mvc {
   background-color: #5b21b6;
 }
-.tag.hooks,
-.tag.useeffect {
+
+.tag.tag-hooks,
+.tag.tag-useeffect {
   background-color: #10b981;
 }
-.tag.arrays,
-.tag.map,
-.tag.filter {
+
+.tag.tag-arrays,
+.tag.tag-map,
+.tag.tag-filter {
   background-color: #f59e0b;
   color: #000;
 }
-.tag.function,
-.tag.if,
-.tag.print,
-.tag.syntax {
+
+.tag.tag-function,
+.tag.tag-if,
+.tag.tag-print,
+.tag.tag-syntax {
   background-color: #4b5563;
 }
-.tag.grid {
+
+.tag.tag-grid {
   background-color: #0d9488;
 }
-.tag.layout {
+.tag.tag-layout {
   background-color: #14b8a6;
 }
-.tag.express {
+
+.tag.tag-express {
   background-color: #000000;
+}
+
+/* ✅ New ones */
+.tag.tag-mongodb {
+  background-color: #13aa52;
 }
 
 /* === Code Preview === */
