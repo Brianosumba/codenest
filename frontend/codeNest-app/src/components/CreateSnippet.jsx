@@ -105,7 +105,7 @@ const CreateSnippet = () => {
       setTimeout(() => {
         setShowToast(false);
         navigate("/dashboard");
-      }, 2000);
+      }, 800);
     } catch (err) {
       setError(err.response?.data?.message || "Error creating snippet.");
     } finally {

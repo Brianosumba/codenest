@@ -64,6 +64,10 @@ const Dashboard = () => {
     );
   });
 
+  const sortedSnippets = [...filteredSnippets].sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+
   const uniqueCategories = ["All", ...new Set(snippets.map((s) => s.category))];
 
   return (
@@ -113,7 +117,7 @@ const Dashboard = () => {
           <p>No snippets matched your search.</p>
         ) : (
           <div className="snippet-grid">
-            {filteredSnippets.map((snippet) => (
+            {sortedSnippets.map((snippet) => (
               <SnippetCard key={snippet._id} snippet={snippet} />
             ))}
           </div>
