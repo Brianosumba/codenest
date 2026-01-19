@@ -9,6 +9,7 @@ const SnippetCard = ({ snippet, showDescription = false, showTags = true }) => {
     <div className="snippet-card">
       <div className="snippet-header">
         <h3 className="snippet-title">{snippet.title}</h3>
+        {snippet.starter && <span className="snippet-badge">EXAMPLE</span>}
 
         <div className="snippet-subtitle-rows">
           <div className="snippet-row">
@@ -24,12 +25,12 @@ const SnippetCard = ({ snippet, showDescription = false, showTags = true }) => {
 
       {showTags && snippet.tags?.length > 0 && (
         <div className="snippet-tags">
-          {snippet.tags.map((tag) => {
-            const label = tag.trim();
+          {snippet.tags.map((tag, i) => {
+            const label = String(tag ?? "").trim();
             const safeClass = label.toLowerCase().replace(/[^a-z0-9_-]/g, "-");
             return (
               <span
-                key={safeClass}
+                key={`${safeClass}-${i}`}
                 className={`tag tag-${safeClass}`}
                 title={label}
               >

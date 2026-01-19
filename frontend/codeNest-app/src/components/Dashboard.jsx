@@ -17,6 +17,7 @@ const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+  const [starterSnippets, setStarterSnippets] = useState([]);
 
   const handleCreateSnippet = () => {
     navigate("/create-snippet");
@@ -26,12 +27,16 @@ const Dashboard = () => {
     const fetchSnippets = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await API.get("/snippets", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setSnippets(res.data);
+
+        const [userRes, starterRes] = await Promise.all([
+          API.get("/snippets", {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+          API.get("/snippets/starter"),
+        ]);
+
+        setSnippets(userRes.data);
+        setStarterSnippets(starterRes.data);
       } catch (err) {
         console.error(err);
         setError("Failed to load snippets.");
@@ -108,7 +113,7 @@ const Dashboard = () => {
       </label>
 
       <div className="recent-snippets">
-        <h2>Your Snippets</h2>
+        <h2>My Snippets</h2>
         {loading ? (
           <p>Loading snippets...</p>
         ) : error ? (
@@ -119,6 +124,24 @@ const Dashboard = () => {
           <div className="snippet-grid">
             {sortedSnippets.map((snippet) => (
               <SnippetCard key={snippet._id} snippet={snippet} />
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className="recent-snippets">
+        <h2>Example Snippets</h2>
+
+        {starterSnippets.length === 0 ? (
+          <p>No example snippets available.</p>
+        ) : (
+          <div className="snippet-grid">
+            {starterSnippets.map((snippet) => (
+              <SnippetCard
+                key={snippet._id}
+                snippet={snippet}
+                showDescription={true}
+              />
             ))}
           </div>
         )}

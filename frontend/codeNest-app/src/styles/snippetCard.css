@@ -50,6 +50,19 @@
   margin-bottom: 0.25rem;
   word-break: break-word;
 }
+.snippet-badge {
+  display: inline-block;
+  margin-top: 0.4rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--text-color);
+}
 
 .snippet-subtitle-rows {
   display: flex;
