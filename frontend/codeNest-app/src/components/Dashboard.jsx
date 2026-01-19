@@ -47,27 +47,29 @@ const Dashboard = () => {
     fetchSnippets();
   }, []);
 
-  const filteredSnippets = snippets.filter((snippet) => {
-    const query = searchQuery.toLowerCase();
-    const matchTitle = snippet.title?.toLowerCase().includes(query);
-    const matchLanguage = snippet.language?.toLowerCase().includes(query);
-    const matchCategory = snippet.category?.toLowerCase().includes(query);
-    const matchTags = Array.isArray(snippet.tags)
-      ? snippet.tags.some((tag) => tag.toLowerCase().includes(query))
-      : false;
+  const filteredSnippets = snippets
+    .filter((s) => !s.starter)
+    .filter((snippet) => {
+      const query = searchQuery.toLowerCase();
+      const matchTitle = snippet.title?.toLowerCase().includes(query);
+      const matchLanguage = snippet.language?.toLowerCase().includes(query);
+      const matchCategory = snippet.category?.toLowerCase().includes(query);
+      const matchTags = Array.isArray(snippet.tags)
+        ? snippet.tags.some((tag) => tag.toLowerCase().includes(query))
+        : false;
 
-    const categoryMatch =
-      selectedCategory.toLowerCase() === "all" ||
-      snippet.category?.toLowerCase() === selectedCategory.toLowerCase();
+      const categoryMatch =
+        selectedCategory.toLowerCase() === "all" ||
+        snippet.category?.toLowerCase() === selectedCategory.toLowerCase();
 
-    const favoriteMatch = !showFavoritesOnly || snippet.isFavorite;
+      const favoriteMatch = !showFavoritesOnly || snippet.isFavorite;
 
-    return (
-      (matchTitle || matchLanguage || matchTags || matchCategory) &&
-      categoryMatch &&
-      favoriteMatch
-    );
-  });
+      return (
+        (matchTitle || matchLanguage || matchTags || matchCategory) &&
+        categoryMatch &&
+        favoriteMatch
+      );
+    });
 
   const sortedSnippets = [...filteredSnippets].sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
