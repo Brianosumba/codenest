@@ -1,15 +1,52 @@
 import { Link } from "react-router-dom";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+
 import "../styles/snippetCard.css";
+import { languageToMonacoId } from "../config/snippetConfig";
 
 const SnippetCard = ({ snippet, showDescription = false, showTags = true }) => {
+  const markdownComponents = {
+    code({ inline, className, children, ...props }) {
+      const match = /language-(\w+)/.exec(className || "");
+      const langKey = match ? match[1] : "";
+
+      const resolvedLanguage =
+        Object.entries(languageToMonacoId).find(
+          ([_, monacoLang]) =>
+            monacoLang.toLowerCase() === langKey.toLowerCase()
+        )?.[1] || "javascript";
+
+      if (!inline) {
+        return (
+          <SyntaxHighlighter
+            style={vscDarkPlus}
+            language={resolvedLanguage}
+            PreTag="div"
+            className="snippet-markdown-code"
+            {...props}
+          >
+            {String(children).replace(/\n$/, "")}
+          </SyntaxHighlighter>
+        );
+      }
+
+      return (
+        <code className="snippet-inline-code" {...props}>
+          {children}
+        </code>
+      );
+    },
+  };
   return (
     <div className="snippet-card">
       <div className="snippet-header">
-        <h3 className="snippet-title">{snippet.title}</h3>
-        {snippet.starter && <span className="snippet-badge">EXAMPLE</span>}
+        <div className="snippet-title-row">
+          <h3 className="snippet-title">{snippet.title}</h3>
+          {snippet.starter && <span className="snippet-badge">EXAMPLE</span>}
+        </div>
 
         <div className="snippet-subtitle-rows">
           <div className="snippet-row">
@@ -56,7 +93,15 @@ const SnippetCard = ({ snippet, showDescription = false, showTags = true }) => {
       </div>
 
       {showDescription && snippet.description && (
-        <p className="snippet-description">{snippet.description}</p>
+        <div className="snippet-description">
+          <ReactMarkdown
+            components={markdownComponents}
+            disallowedElements={["p"]}
+            unwrapDisallowed={true}
+          >
+            {snippet.description}
+          </ReactMarkdown>
+        </div>
       )}
 
       <div className="snippet-actions">
